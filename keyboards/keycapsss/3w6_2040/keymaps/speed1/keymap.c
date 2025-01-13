@@ -62,6 +62,24 @@ combo_t key_combos[] = {
 
 // end Combos
 
+// start Tap Dance declarations
+
+enum {
+    TD_C_copy,
+    TD_V_paste,
+    TD_X_cut,
+};
+
+// Tap Dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [TD_C_copy] = ACTION_TAP_DANCE_DOUBLE(KC_C, RGUI(KC_C)),
+    [TD_V_paste] = ACTION_TAP_DANCE_DOUBLE(KC_V, RGUI(KC_V)),
+    [TD_X_cut] = ACTION_TAP_DANCE_DOUBLE(KC_X, RGUI(KC_X)),
+};
+
+// end Tap Dance declarations
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // clang-format off
@@ -69,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                  KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
         CKC_A, CKC_R, CKC_S, CKC_T, KC_G,                                                          KC_M, CKC_N, CKC_E, CKC_I, CKC_O,
-        KC_Y,    KC_X,    KC_C,    KC_D,    KC_V,                                                   KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
+        KC_Y,    TD(TD_X_cut),    TD(TD_C_copy),    KC_D,    TD(TD_V_paste),               KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
            LT(_CFG,KC_ESCAPE), LT(_NUM,KC_SPC), LT(_NAV, KC_TAB),                     KC_BSPC, LT(_SYM, KC_ENT), KC_DEL
     ),
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
@@ -100,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RGUI(KC_Y), RGUI(KC_X), RGUI(KC_C), RGUI(KC_V), XXXXXXX,                                XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
         KC_QUOT, XXXXXXX, XXXXXXX, LSFT_T(XXXXXXX), XXXXXXX,                     XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                         XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX
+                                         XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, QK_BOOT
     )
     // clang-format on
 };
