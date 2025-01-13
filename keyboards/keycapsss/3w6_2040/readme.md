@@ -27,3 +27,9 @@ Enter the bootloader in 3 ways:
 * **Bootmagic reset**: Hold down the key at (0,0) in the matrix (usually the top left key or Escape) and plug in the keyboard
 * **Physical reset button**: Press and hold the button on the front of the PCB when plugging in.
 * **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available
+
+## Notes
+
+German macos layouts:
+<https://github.com/qmk/qmk_firmware/blob/c6850bad74ccec3cec0af1c74eb20b139d0ca481/quantum/keymap_extras/keymap_german_osx.h>  
+<https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_german.h>
