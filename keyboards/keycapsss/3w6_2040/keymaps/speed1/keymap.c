@@ -24,6 +24,10 @@ enum custom_keycodes {
     CKC_E,
     CKC_I,
     CKC_O,
+    CKC_ESC,
+    CKC_SPC,
+    CKC_TAB,
+    CKC_ENT,
     SMTD_KEYCODES_END,
 };
 
@@ -46,6 +50,10 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
         SMTD_MT(CKC_E, KC_E, KC_RIGHT_CTRL)
         SMTD_MT(CKC_I, KC_I, KC_RIGHT_ALT)
         SMTD_MT(CKC_O, KC_O, KC_RIGHT_GUI)
+        SMTD_LT(CKC_ESC, KC_ESC, _CFG)
+        SMTD_LT(CKC_SPC, KC_SPC, _NUM)
+        SMTD_LT(CKC_TAB, KC_TAB, _NAV)
+        SMTD_LT(CKC_ENT, KC_ENT, _SYM)
     }
 }
 
@@ -90,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                                KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
         CKC_A, CKC_R, CKC_S, CKC_T, KC_G,                                                                        KC_M, CKC_N, CKC_E, CKC_I, CKC_O,
         TD(TD_Y_undo), TD(TD_X_cut), TD(TD_C_copy), KC_D, TD(TD_V_paste),                             KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
-           LT(_CFG,KC_ESCAPE), LT(_NUM,KC_SPC), LT(_NAV, KC_TAB),                                  KC_BSPC, LT(_SYM, KC_ENT), KC_DEL
+           CKC_ESC, CKC_SPC, CKC_TAB,                                                                        KC_BSPC, CKC_ENT, KC_DEL
     ),
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
         KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,                                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
