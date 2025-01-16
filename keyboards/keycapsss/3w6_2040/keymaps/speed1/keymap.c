@@ -63,9 +63,11 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
 
 const uint16_t PROGMEM lock_device[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM close_app[] = {KC_Q, KC_P, COMBO_END};
+const uint16_t PROGMEM caps_lock[] = {CKC_T, CKC_N, COMBO_END};
 combo_t key_combos[] = {
     COMBO(lock_device, C(G(KC_Q))),
     COMBO(close_app, G(KC_Q)),
+    COMBO(caps_lock, KC_CAPS),
 };
 
 // end Combos
@@ -114,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_NAV] = LAYOUT_split_3x5_3(
         XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX,                                XXXXXXX, RGUI(KC_V),  RGUI(KC_C), RGUI(KC_X), RGUI(KC_Y),
-        KC_MPRV, KC_MPLY, KC_MSTP, KC_MNXT, XXXXXXX,                                KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        KC_MPRV, KC_MPLY, KC_MPLY, KC_MNXT, XXXXXXX,                                KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
                                         XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, MO(_CFG), XXXXXXX
     ),
