@@ -192,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_SYM] = LAYOUT_split_3x5_3(
         RALT(KC_8) , LSFT(KC_6),   LSFT(KC_RBRC),  LSFT(KC_2), RALT(KC_9),            RSFT(KC_EQUAL), KC_NONUS_BACKSLASH, KC_GRAVE, RSFT(KC_GRAVE), XXXXXXX,
-        LSFT(KC_DOT), LSFT(KC_4), RSFT(KC_5), LSFT(KC_7),  KC_RBRC,                    RSFT(KC_NONUS_HASH), RALT_T(KC_N), XXXXXXX, XXXXXXX, XXXXXXX,
+        LSFT(KC_DOT), LSFT(KC_4), RSFT(KC_5), LSFT(KC_7),  KC_RBRC,                    RSFT(KC_NONUS_HASH), LALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
         LSFT(KC_MINUS), LSFT(KC_1), RALT(KC_L), KC_NONUS_HASH, RALT(KC_7),          KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
                 LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                           XXXXXXX, XXXXXXX, XXXXXXX
     ),
