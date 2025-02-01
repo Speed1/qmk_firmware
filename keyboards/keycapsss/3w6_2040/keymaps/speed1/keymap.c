@@ -146,10 +146,16 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
 const uint16_t PROGMEM lock_device[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM close_app[]   = {KC_Q, KC_P, COMBO_END};
 const uint16_t PROGMEM caps_lock[]   = {CKC_T, CKC_N, COMBO_END};
+const uint16_t PROGMEM TD_AE[] = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM TD_OE[] = {CKC_U, KC_Z, COMBO_END};
+const uint16_t PROGMEM TD_UE[] = {KC_L, CKC_U, COMBO_END};
 combo_t key_combos[]  = {
-    COMBO(lock_device, C(G(KC_Q))),
-    COMBO(close_app, G(KC_Q)),
+    COMBO(lock_device, LCTL(RGUI(KC_Q))),
+    COMBO(close_app, RGUI(KC_Q)),
     COMBO(caps_lock, KC_CAPS),
+    COMBO(TD_AE, KC_QUOT),
+    COMBO(TD_OE, KC_SCLN),
+    COMBO(TD_UE, KC_LBRC),
 };
 
 // end Combos
@@ -157,18 +163,11 @@ combo_t key_combos[]  = {
 // start Tap Dance declarations
 
 enum {
-    TD_C_copy,
-    TD_V_paste,
-    TD_X_cut,
     TD_Y_undo,
 };
 
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
-    [TD_C_copy]  = ACTION_TAP_DANCE_DOUBLE(KC_C, RGUI(KC_C)),
-    [TD_V_paste] = ACTION_TAP_DANCE_DOUBLE(KC_V, RGUI(KC_V)),
-    [TD_X_cut]   = ACTION_TAP_DANCE_DOUBLE(KC_X, RGUI(KC_X)),
     [TD_Y_undo]  = ACTION_TAP_DANCE_DOUBLE(KC_Y, RGUI(KC_Y)),
 };
 
@@ -181,7 +180,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                          KC_J,    KC_L,    CKC_U,    KC_Z,    KC_MINS,
         CKC_A, CKC_R, CKC_S, CKC_T, KC_G,                                                  KC_M, CKC_N, CKC_E, CKC_I, CKC_O,
-        TD(TD_Y_undo), TD(TD_X_cut), TD(TD_C_copy), KC_D, TD(TD_V_paste),       KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
+        TD(TD_Y_undo), KC_X, KC_C, KC_D, KC_V,                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
                 CKC_ESC, CKC_SPC, CKC_TAB,                                                      KC_BSPC, CKC_ENT, KC_DEL
     ),
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
@@ -205,7 +204,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      [_NUM] = LAYOUT_split_3x5_3(
         XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                    RALT(KC_5),  KC_7,  KC_8,  KC_9,  RALT(KC_6),
         RGUI(KC_A),  KC_F4,  KC_F5,  KC_F6,  KC_F11,             RSFT(KC_0),  KC_4,  KC_5,  KC_6, RSFT(KC_COMMA),
-        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                 S(A(DE_7)),  KC_1,  KC_2,  KC_3, KC_DOT,
+        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                 RSFT(RALT(DE_7)),  KC_1,  KC_2,  KC_3, KC_DOT,
                   XXXXXXX, XXXXXXX, XXXXXXX,                        RSFT(KC_0), KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
