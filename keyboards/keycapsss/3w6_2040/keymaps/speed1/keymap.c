@@ -43,101 +43,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch (keycode) {
-        // SMTD_MT(CKC_A, KC_A, KC_LEFT_GUI)
+        SMTD_MT(CKC_A, KC_A, KC_LEFT_GUI)
         SMTD_MT(CKC_R, KC_R, KC_LEFT_ALT)
         SMTD_MT(CKC_S, KC_S, KC_LEFT_CTRL)
         SMTD_MT(CKC_T, KC_T, KC_LSFT)
         SMTD_MT(CKC_N, KC_N, KC_RSFT)
         SMTD_MT(CKC_E, KC_E, KC_RIGHT_CTRL)
         SMTD_MT(CKC_I, KC_I, KC_RIGHT_ALT)
-        //SMTD_MT(CKC_O, KC_O, KC_RIGHT_GUI)
+        SMTD_MT(CKC_O, KC_O, KC_RIGHT_GUI)
         SMTD_LT(CKC_ESC, KC_ESC, _CFG)
         SMTD_LT(CKC_SPC, KC_SPC, _NUM)
         SMTD_LT(CKC_TAB, KC_TAB, _NAV)
         SMTD_LT(CKC_ENT, KC_ENT, _SYM)
-
-        case CKC_A: {
-            switch (action) {
-                case SMTD_ACTION_TOUCH:
-                    break;
-                case SMTD_ACTION_TAP:
-                    if (tap_count < 1) {
-                        tap_code16(is_caps_word_on() ? LSFT(KC_A) : KC_A);
-                    } else {
-                        tap_code16(KC_BSPC); // to delete previous KC_A
-                        tap_code16(is_caps_word_on() ? LSFT(KC_QUOT) : KC_QUOT);
-                    }
-                    break;
-                case SMTD_ACTION_HOLD:
-                    if (tap_count < 1) {
-                        register_mods(MOD_BIT(KC_LEFT_GUI));
-                    } else {
-                        register_code16(is_caps_word_on() ? LSFT(KC_A) : KC_A);
-                    }
-                    break;
-                case SMTD_ACTION_RELEASE:
-                    if (tap_count < 1) {
-                        unregister_mods(MOD_BIT(KC_LEFT_GUI));
-                    } else {
-                        unregister_code16(is_caps_word_on() ? LSFT(KC_A) : KC_A);
-                        send_keyboard_report();
-                    }
-                    break;
-            }
-            break;
-        }
-
-        case CKC_O: {
-            switch (action) {
-                case SMTD_ACTION_TOUCH:
-                    break;
-                case SMTD_ACTION_TAP:
-                    if (tap_count < 1) {
-                        tap_code16(is_caps_word_on() ? LSFT(KC_O) : KC_O);
-                    } else {
-                        tap_code16(KC_BSPC); // to delete previous KC_A
-                        tap_code16(is_caps_word_on() ? LSFT(KC_SCLN) : KC_SCLN);
-                    }
-                    break;
-                case SMTD_ACTION_HOLD:
-                    if (tap_count < 1) {
-                        register_mods(MOD_BIT(KC_RIGHT_GUI));
-                    } else {
-                        register_code16(is_caps_word_on() ? LSFT(KC_O) : KC_O);
-                    }
-                    break;
-                case SMTD_ACTION_RELEASE:
-                    if (tap_count < 1) {
-                        unregister_mods(MOD_BIT(KC_RIGHT_GUI));
-                    } else {
-                        unregister_code16(is_caps_word_on() ? LSFT(KC_O) : KC_O);
-                        send_keyboard_report();
-                    }
-                    break;
-            }
-            break;
-        }
-        case CKC_U: {
-            switch (action) {
-                case SMTD_ACTION_TOUCH:
-                    break;
-                case SMTD_ACTION_TAP:
-                    if (tap_count < 1) {
-                        tap_code16(is_caps_word_on() ? LSFT(KC_U) : KC_U);
-                    } else {
-                        tap_code16(KC_BSPC); // to delete previous KC_A
-                        tap_code16(is_caps_word_on() ? LSFT(KC_LBRC) : KC_LBRC);
-                    }
-                    break;
-                case SMTD_ACTION_HOLD:
-                break;
-                case SMTD_ACTION_RELEASE:
-                break;
-            }
-            break;
         }
     }
-}
+
 
 // end SM Tap Dance (sm_td or smtd for short) user library for QMK
 
@@ -147,8 +67,8 @@ const uint16_t PROGMEM lock_device[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM close_app[]   = {KC_Q, KC_P, COMBO_END};
 const uint16_t PROGMEM caps_lock[]   = {CKC_T, CKC_N, COMBO_END};
 const uint16_t PROGMEM TD_AE[] = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM TD_OE[] = {CKC_U, KC_Z, COMBO_END};
-const uint16_t PROGMEM TD_UE[] = {KC_L, CKC_U, COMBO_END};
+const uint16_t PROGMEM TD_OE[] = {KC_U, KC_Z, COMBO_END};
+const uint16_t PROGMEM TD_UE[] = {KC_L, KC_U, COMBO_END};
 combo_t key_combos[]  = {
     COMBO(lock_device, LCTL(RGUI(KC_Q))),
     COMBO(close_app, RGUI(KC_Q)),
@@ -178,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format off
 
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
-        KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                          KC_J,    KC_L,    CKC_U,    KC_Z,    KC_MINS,
+        KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                          KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
         CKC_A, CKC_R, CKC_S, CKC_T, KC_G,                                                  KC_M, CKC_N, CKC_E, CKC_I, CKC_O,
         TD(TD_Y_undo), KC_X, KC_C, KC_D, KC_V,                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
                 CKC_ESC, CKC_SPC, CKC_TAB,                                                      KC_BSPC, CKC_ENT, KC_DEL
