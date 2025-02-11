@@ -58,24 +58,29 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
         }
     }
 
-
 // end SM Tap Dance (sm_td or smtd for short) user library for QMK
 
 // start Combos
 
 const uint16_t PROGMEM lock_device[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM close_app[]   = {KC_Q, KC_P, COMBO_END};
-const uint16_t PROGMEM caps_lock[]   = {CKC_T, CKC_N, COMBO_END};
-const uint16_t PROGMEM TD_AE[] = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM TD_OE[] = {KC_U, KC_Z, COMBO_END};
-const uint16_t PROGMEM TD_UE[] = {KC_L, KC_U, COMBO_END};
+//const uint16_t PROGMEM caps_lock[]   = {CKC_T, CKC_N, COMBO_END};
+const uint16_t PROGMEM caps_word[]   = {CKC_T, CKC_N, COMBO_END};
+const uint16_t PROGMEM TD_AE[] = {CKC_A, CKC_R, COMBO_END};
+const uint16_t PROGMEM TD_OE[] = {CKC_I, CKC_O, COMBO_END};
+const uint16_t PROGMEM TD_UE[] = {KC_U, KC_Z, COMBO_END};
+const uint16_t PROGMEM TD_ENT[] = {CKC_S, CKC_T, COMBO_END};
+const uint16_t PROGMEM TD_BSPC[] = {KC_F, KC_P, COMBO_END};
 combo_t key_combos[]  = {
     COMBO(lock_device, LCTL(RGUI(KC_Q))),
     COMBO(close_app, RGUI(KC_Q)),
-    COMBO(caps_lock, KC_CAPS),
+    //COMBO(caps_lock, KC_CAPS),
+    COMBO(caps_word, QK_CAPS_WORD_TOGGLE),
     COMBO(TD_AE, KC_QUOT),
     COMBO(TD_OE, KC_SCLN),
     COMBO(TD_UE, KC_LBRC),
+    COMBO(TD_ENT, KC_ENT),
+    COMBO(TD_BSPC, KC_BSPC),
 };
 
 // end Combos
@@ -92,6 +97,33 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 // end Tap Dance declarations
+
+// start caps_word definitions
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+        case KC_MINS:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+            return true;
+
+        case CKC_SPC:
+            return false;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
+
+// end caps_word definitions
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -116,10 +148,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                           XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX,          XXXXXXX, RGUI(KC_V),  RGUI(KC_C), RGUI(KC_X), RGUI(KC_Y),
-        KC_MPRV, KC_MPLY, KC_MPLY, KC_MNXT, XXXXXXX,          KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
-                  XXXXXXX, XXXXXXX, XXXXXXX,                         XXXXXXX, MO(_CFG), XXXXXXX
+        XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX,                            XXXXXXX, RGUI(KC_V),  RGUI(KC_C), RGUI(KC_X), RGUI(KC_Y),
+        KC_MPRV, KC_MPLY, KC_MPLY, KC_MNXT, XXXXXXX,                           KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        RGUI(KC_Y), RGUI(KC_X), RGUI(KC_C), RGUI(KC_V), XXXXXXX,              XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
+                  XXXXXXX, XXXXXXX, XXXXXXX,                                                XXXXXXX, MO(_CFG), XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_3(
         XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                    RALT(KC_5),  KC_7,  KC_8,  KC_9,  RALT(KC_6),
@@ -128,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   XXXXXXX, XXXXXXX, XXXXXXX,                        RSFT(KC_0), KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
-        RGUI(KC_Y), RGUI(KC_X), RGUI(KC_C), RGUI(KC_V), XXXXXXX,          XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
         KC_QUOT, XXXXXXX, XXXXXXX, LSFT_T(XXXXXXX), XXXXXXX,              XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 XXXXXXX, XXXXXXX, XXXXXXX,                                            XXXXXXX, XXXXXXX, QK_BOOT
