@@ -63,7 +63,7 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
 
 const uint16_t PROGMEM lock_device[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM close_app[]   = {KC_Q, KC_P, COMBO_END};
-//const uint16_t PROGMEM caps_lock[]   = {CKC_T, CKC_N, COMBO_END};
+const uint16_t PROGMEM caps_lock[]   = {KC_P, KC_L, COMBO_END};
 const uint16_t PROGMEM caps_word[]   = {CKC_T, CKC_N, COMBO_END};
 const uint16_t PROGMEM TD_AE[] = {CKC_A, CKC_R, COMBO_END};
 const uint16_t PROGMEM TD_OE[] = {CKC_I, CKC_O, COMBO_END};
@@ -74,7 +74,7 @@ const uint16_t PROGMEM TD_SCREENSHOT[] = {KC_C, KC_D, COMBO_END};
 combo_t key_combos[]  = {
     COMBO(lock_device, LCTL(RGUI(KC_Q))),
     COMBO(close_app, RGUI(KC_Q)),
-    //COMBO(caps_lock, KC_CAPS),
+    COMBO(caps_lock, KC_CAPS),
     COMBO(caps_word, QK_CAPS_WORD_TOGGLE),
     COMBO(TD_AE, KC_QUOT),
     COMBO(TD_OE, KC_SCLN),
