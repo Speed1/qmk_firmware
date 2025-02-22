@@ -46,18 +46,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch (keycode) {
-        SMTD_MT(CKC_A, KC_A, KC_LEFT_GUI)
+        SMTD_MT(CKC_A, KC_A, KC_LEFT_CTRL)
         SMTD_MT(CKC_R, KC_R, KC_LEFT_ALT)
-        SMTD_MT(CKC_S, KC_S, KC_LEFT_CTRL)
+        SMTD_MT(CKC_S, KC_S, KC_LEFT_GUI)
         SMTD_MT(CKC_T, KC_T, KC_LSFT)
         SMTD_MT(CKC_N, KC_N, KC_RSFT)
-        SMTD_MT(CKC_E, KC_E, KC_RIGHT_CTRL)
+        SMTD_MT(CKC_E, KC_E, KC_RIGHT_GUI)
         SMTD_MT(CKC_I, KC_I, KC_RIGHT_ALT)
-        SMTD_MT(CKC_O, KC_O, KC_RIGHT_GUI)
-        SMTD_MT(CKC_NA, RGUI(KC_A), KC_LEFT_GUI)
+        SMTD_MT(CKC_O, KC_O, KC_RIGHT_CTRL)
+        // copy and paste in num layout
+        SMTD_MT(CKC_NA, RGUI(KC_A), KC_LEFT_CTRL)
         SMTD_MT(CKC_NR, RGUI(KC_X), KC_LEFT_ALT)
-        SMTD_MT(CKC_NS, RGUI(KC_C), KC_LEFT_CTRL)
+        SMTD_MT(CKC_NS, RGUI(KC_C), KC_LEFT_GUI)
         SMTD_MT(CKC_NT, RGUI(KC_V), KC_LSFT)
+        // layout switch
         SMTD_LT(CKC_ESC, KC_ESC, _CFG)
         SMTD_LT(CKC_SPC, KC_SPC, _NUM)
         SMTD_LT(CKC_TAB, KC_TAB, _NAV)
@@ -146,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
         KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,                                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,                                KC_H, RSFT_T(KC_J), RCTL_T(KC_K), RALT_T(KC_L), RGUI_T(KC_SCLN),
+        LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LSFT_T(KC_F), KC_G,                                KC_H, RSFT_T(KC_J), RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN),
         KC_Z, KC_X,    KC_C,    KC_V,    KC_B,                                                                 KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
              LT(_CFG,KC_ESCAPE), LT(_NUM,KC_SPC), LT(_NAV, KC_TAB),                                      KC_BSPC, LT(_SYM, KC_ENT), KC_DEL
     ),
@@ -157,8 +159,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                                       XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
-        XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 XXXXXXX, RGUI(KC_V),  RGUI(KC_C), RGUI(KC_X), RGUI(KC_Y),
-        LGUI_T(XXXXXXX), LALT_T(KC_F4),  LCTL_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+        LCTL_T(XXXXXXX), LALT_T(KC_F4),  LGUI_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                              XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                         XXXXXXX, MO(_CFG), XXXXXXX
     ),
