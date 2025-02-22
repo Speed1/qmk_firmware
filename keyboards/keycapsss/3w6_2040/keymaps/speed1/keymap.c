@@ -24,6 +24,10 @@ enum custom_keycodes {
     CKC_E,
     CKC_I,
     CKC_O,
+    CKC_NA,
+    CKC_NR,
+    CKC_NS,
+    CKC_NT,
     CKC_ESC,
     CKC_SPC,
     CKC_TAB,
@@ -50,6 +54,10 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
         SMTD_MT(CKC_E, KC_E, KC_RIGHT_CTRL)
         SMTD_MT(CKC_I, KC_I, KC_RIGHT_ALT)
         SMTD_MT(CKC_O, KC_O, KC_RIGHT_GUI)
+        SMTD_MT(CKC_NA, RGUI(KC_A), KC_LEFT_GUI)
+        SMTD_MT(CKC_NR, RGUI(KC_X), KC_LEFT_ALT)
+        SMTD_MT(CKC_NS, RGUI(KC_C), KC_LEFT_CTRL)
+        SMTD_MT(CKC_NT, RGUI(KC_V), KC_LSFT)
         SMTD_LT(CKC_ESC, KC_ESC, _CFG)
         SMTD_LT(CKC_SPC, KC_SPC, _NUM)
         SMTD_LT(CKC_TAB, KC_TAB, _NAV)
@@ -149,16 +157,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                                       XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX,                                                       XXXXXXX, RGUI(KC_V),  RGUI(KC_C), RGUI(KC_X), RGUI(KC_Y),
-        LGUI_T(KC_MPRV), LALT_T(KC_MPLY), LCTL_T(KC_MPLY), LSFT_T(KC_MNXT), XXXXXXX,           KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
-        RGUI(KC_Y), RGUI(KC_X), RGUI(KC_C), RGUI(KC_V), XXXXXXX,                                         XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
+        XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 XXXXXXX, RGUI(KC_V),  RGUI(KC_C), RGUI(KC_X), RGUI(KC_Y),
+        LGUI_T(XXXXXXX), LALT_T(KC_F4),  LCTL_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                              XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                         XXXXXXX, MO(_CFG), XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_3(
-        XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                RALT(KC_5),  KC_7,  KC_8,  KC_9,  RALT(KC_6),
-        RGUI(KC_A), LALT_T(KC_F4),  KC_F5,  KC_F6,  KC_F11,                                                RSFT(KC_0),  KC_4,  KC_5,  KC_6, RSFT(KC_COMMA),
-        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                             RSFT(RALT(DE_7)),  KC_1,  KC_2,  KC_3, KC_DOT,
-                  XXXXXXX, XXXXXXX, XXXXXXX,                                                                          KC_BSPC, KC_0, KC_PENT
+        KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, XXXXXXX,                                                     RALT(KC_5),  KC_7,  KC_8,  KC_9,  RALT(KC_6),
+        CKC_NA, CKC_NR, CKC_NS, CKC_NT, XXXXXXX,                                                               RSFT(KC_0),  KC_4,  KC_5,  KC_6, RSFT(KC_COMMA),
+        XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         RSFT(RALT(DE_7)),  KC_1,  KC_2,  KC_3, KC_DOT,
+                  XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                        XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
