@@ -131,9 +131,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                        XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
-        XXXXXXX, XXXXXXX, XXXXXXX, LSFT_T(XXXXXXX), XXXXXXX,                                             XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        LALT(KC_Q), XXXXXXX, XXXXXXX, LALT(KC_P), LALT(KC_B),                                                XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
+        LALT(KC_A), XXXXXXX, LALT(KC_S), RSFT_T(LALT(KC_T)), LALT(KC_G),                                      XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
+        LALT(KC_Y), XXXXXXX, LALT(KC_C), LALT(KC_D), LALT(KC_V),                                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 XXXXXXX, XXXXXXX, XXXXXXX,                                                                          XXXXXXX, XXXXXXX, QK_BOOT
     )
     // clang-format on
