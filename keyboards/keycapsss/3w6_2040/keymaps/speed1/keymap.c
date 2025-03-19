@@ -96,46 +96,6 @@ combo_t key_combos[]  = {
 
 // end Combos
 
-// start Tap Dance declarations
-
-enum {
-    TD_Y_undo,
-};
-
-// Tap Dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_Y_undo]  = ACTION_TAP_DANCE_DOUBLE(KC_Y, RGUI(KC_Y)),
-};
-
-// end Tap Dance declarations
-
-// start caps_word definitions
-
-bool caps_word_press_user(uint16_t keycode) {
-    switch (keycode) {
-        // Keycodes that continue Caps Word, with shift applied.
-        case KC_A ... KC_Z:
-        case KC_MINS:
-            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
-            return true;
-
-        // Keycodes that continue Caps Word, without shifting.
-        case KC_1 ... KC_0:
-        case KC_BSPC:
-        case KC_DEL:
-        case KC_UNDS:
-            return true;
-
-        case CKC_SPC:
-            return false;
-
-        default:
-            return false;  // Deactivate Caps Word.
-    }
-}
-
-// end caps_word definitions
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // clang-format off
@@ -143,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
         CKC_A, CKC_R, CKC_S, CKC_T, KC_G,                                                                     KC_M, CKC_N, CKC_E, CKC_I, CKC_O,
-        TD(TD_Y_undo), KC_X, KC_C, KC_D, KC_V,                                                              KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
+        KC_Y, KC_X, KC_C, KC_D, KC_V,                                                              KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
                 CKC_ESC, CKC_SPC, CKC_TAB,                                                                         KC_BSPC, CKC_ENT, KC_DEL
     ),
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
@@ -172,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
         [_CFG] = LAYOUT_split_3x5_3(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                        XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
-        KC_QUOT, XXXXXXX, XXXXXXX, LSFT_T(XXXXXXX), XXXXXXX,                                             XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
+        XXXXXXX, XXXXXXX, XXXXXXX, LSFT_T(XXXXXXX), XXXXXXX,                                             XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 XXXXXXX, XXXXXXX, XXXXXXX,                                                                          XXXXXXX, XXXXXXX, QK_BOOT
     )
