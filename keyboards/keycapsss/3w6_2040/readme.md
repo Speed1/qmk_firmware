@@ -33,3 +33,17 @@ Enter the bootloader in 3 ways:
 German macos layouts:
 <https://github.com/qmk/qmk_firmware/blob/c6850bad74ccec3cec0af1c74eb20b139d0ca481/quantum/keymap_extras/keymap_german_osx.h>  
 <https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_german.h>
+
+install dependencies
+
+    ```bash
+    brew install qmk/qmk/qmk
+    qmk setup -H /Users/aspitaler/src/github/qmk_firmware
+    ```
+
+build and flash firmware on both controllers
+
+    ```bash
+    qmk compile -kb keycapsss/3w6_2040 -km vial
+    qmk flash -kb keycapsss/3w6_2040 -km vial
+    ```
