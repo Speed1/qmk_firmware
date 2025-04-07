@@ -113,9 +113,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              LT(_CFG,KC_ESCAPE), LT(_NUM,KC_SPC), LT(_NAV, KC_TAB),                                      KC_BSPC, LT(_SYM, KC_ENT), KC_DEL
     ),
     [_SYM] = LAYOUT_split_3x5_3(
-        RALT(KC_8) , LSFT(KC_6),   LSFT(KC_RBRC),  LSFT(KC_2), RALT(KC_9),                          RSFT(KC_EQUAL), KC_NONUS_BACKSLASH, KC_GRAVE, RSFT(KC_GRAVE), XXXXXXX,
-        LSFT(KC_DOT), LSFT(KC_4), RSFT(KC_5), LSFT(KC_7),  KC_RBRC,                                   RSFT(KC_NONUS_HASH), LALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
-        LSFT(KC_MINUS), LSFT(KC_1), RALT(KC_L), KC_NONUS_HASH, RALT(KC_7),                         KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
+        RALT(KC_8) , LSFT(KC_6),   LSFT(KC_RBRC),  LSFT(KC_2), XXXXXXX,                          RSFT(KC_EQUAL), KC_NONUS_BACKSLASH, KC_GRAVE, RSFT(KC_GRAVE), XXXXXXX,
+        RALT(KC_5), LSFT(KC_4), RALT(KC_L), LSFT(KC_7), KC_RBRC,                                   RSFT(KC_NONUS_HASH), LALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
+        LSFT(KC_MINUS), LSFT(KC_1), RSFT(KC_5), KC_NONUS_HASH, RALT(KC_7),                      KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
                 LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                                       XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
@@ -125,15 +125,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                         XXXXXXX, MO(_CFG), XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_3(
-        KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, XXXXXXX,                                                     RALT(KC_5),  KC_7,  KC_8,  KC_9,  RALT(KC_6),
-        CKC_NA, CKC_NR, CKC_NS, CKC_NT, XXXXXXX,                                                               RSFT(KC_0),  KC_4,  KC_5,  KC_6, RSFT(KC_COMMA),
+        KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, XXXXXXX,                                                     KC_RBRC,  KC_7,  KC_8,  KC_9,  RALT(KC_9),
+        CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Y),                                                               RSFT(KC_0),  KC_4,  KC_5,  KC_6, RALT(KC_6),
         XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         RSFT(RALT(DE_7)),  KC_1,  KC_2,  KC_3, KC_DOT,
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
-        LALT(KC_Q), XXXXXXX, XXXXXXX, LALT(KC_P), LALT(KC_B),                                                XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
-        LALT(KC_A), XXXXXXX, LALT(KC_S), RSFT_T(LALT(KC_T)), LALT(KC_G),                                      XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
-        LALT(KC_Y), XXXXXXX, LALT(KC_C), LALT(KC_D), LALT(KC_V),                                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        LALT(KC_Q), XXXXXXX, XXXXXXX, LALT(KC_P), LALT(KC_B),                                             XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
+        LALT(KC_A), XXXXXXX, LALT(KC_S), RSFT_T(LALT(KC_T)), LALT(KC_G),                              XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
+        LALT(KC_Y), XXXXXXX, LALT(KC_C), LALT(KC_D), LALT(KC_V),                                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 XXXXXXX, XXXXXXX, XXXXXXX,                                                                          XXXXXXX, XXXXXXX, QK_BOOT
     )
     // clang-format on
