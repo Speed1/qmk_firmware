@@ -3,6 +3,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_german_mac_iso.h"
+
 enum layers {
     _ALPHA_COLEMAK = 0,
     _ALPHA_QWERTY,
@@ -37,6 +38,7 @@ enum custom_keycodes {
 
 #include "sm_td.h"
 
+// Process tap dance records
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_smtd(keycode, record)) {
         return false;
@@ -46,6 +48,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch (keycode) {
+        // Modifier keys
         SMTD_MT(CKC_A, KC_A, KC_LEFT_CTRL)
         SMTD_MT(CKC_R, KC_R, KC_LEFT_ALT)
         SMTD_MT(CKC_S, KC_S, KC_LEFT_GUI)
@@ -54,56 +57,64 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
         SMTD_MT(CKC_E, KC_E, KC_RIGHT_GUI)
         SMTD_MT(CKC_I, KC_I, KC_RIGHT_ALT)
         SMTD_MT(CKC_O, KC_O, KC_RIGHT_CTRL)
-        // copy and paste in num layout
+        // Num layer copy/paste
         SMTD_MT(CKC_NA, RGUI(KC_A), KC_LEFT_CTRL)
         SMTD_MT(CKC_NR, RGUI(KC_X), KC_LEFT_ALT)
         SMTD_MT(CKC_NS, RGUI(KC_C), KC_LEFT_GUI)
         SMTD_MT(CKC_NT, RGUI(KC_V), KC_LSFT)
-        // layout switch
+        // Layer toggles
         SMTD_LT(CKC_ESC, KC_ESC, _CFG)
         SMTD_LT(CKC_SPC, KC_SPC, _NUM)
         SMTD_LT(CKC_TAB, KC_TAB, _NAV)
         SMTD_LT(CKC_ENT, KC_ENT, _SYM)
-        }
     }
+}
 
 // end SM Tap Dance (sm_td or smtd for short) user library for QMK
 
-// start Combos
+// System combos
+const uint16_t PROGMEM combo_lock_device[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_close_app[]   = {KC_W, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_screenshot[]  = {KC_C, KC_D, COMBO_END};
 
-const uint16_t PROGMEM lock_device[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM close_app[]   = {KC_Q, KC_P, COMBO_END};
-const uint16_t PROGMEM caps_lock[]   = {KC_P, KC_L, COMBO_END};
-const uint16_t PROGMEM caps_word[]   = {CKC_T, CKC_N, COMBO_END};
-const uint16_t PROGMEM TD_AE[] = {CKC_A, CKC_R, COMBO_END};
-const uint16_t PROGMEM TD_OE[] = {CKC_I, CKC_O, COMBO_END};
-const uint16_t PROGMEM TD_UE[] = {KC_U, KC_Z, COMBO_END};
-const uint16_t PROGMEM TD_ENT[] = {CKC_S, CKC_T, COMBO_END};
-const uint16_t PROGMEM TD_BSPC[] = {KC_F, KC_P, COMBO_END};
-const uint16_t PROGMEM TD_SCREENSHOT[] = {KC_C, KC_D, COMBO_END};
-combo_t key_combos[]  = {
-    COMBO(lock_device, LCTL(RGUI(KC_Q))),
-    COMBO(close_app, RGUI(KC_Q)),
-    COMBO(caps_lock, KC_CAPS),
-    COMBO(caps_word, QK_CAPS_WORD_TOGGLE),
-    COMBO(TD_AE, KC_QUOT),
-    COMBO(TD_OE, KC_SCLN),
-    COMBO(TD_UE, KC_LBRC),
-    COMBO(TD_ENT, KC_ENT),
-    COMBO(TD_BSPC, KC_BSPC),
-    COMBO(TD_SCREENSHOT, LGUI(LSFT(KC_4))),
+// Text editing combos
+const uint16_t PROGMEM combo_caps_lock[]   = {KC_P, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_caps_word[]   = {CKC_T, CKC_N, COMBO_END};
+const uint16_t PROGMEM combo_enter[]       = {CKC_S, CKC_T, COMBO_END};
+const uint16_t PROGMEM combo_backspace[]   = {KC_F, KC_P, COMBO_END};
+
+// German umlaut combos
+const uint16_t PROGMEM combo_ae[] = {CKC_A, CKC_R, COMBO_END};
+const uint16_t PROGMEM combo_oe[] = {CKC_I, CKC_O, COMBO_END};
+const uint16_t PROGMEM combo_ue[] = {KC_U, KC_Z, COMBO_END};
+
+combo_t key_combos[] = {
+    // System combos
+    COMBO(combo_lock_device, LCTL(RGUI(KC_Q))),
+    COMBO(combo_close_app, RGUI(KC_Q)),
+    COMBO(combo_screenshot, LGUI(LSFT(KC_4))),
+    
+    // Text editing combos
+    COMBO(combo_caps_lock, KC_CAPS),
+    COMBO(combo_caps_word, QK_CAPS_WORD_TOGGLE),
+    COMBO(combo_enter, KC_ENT),
+    COMBO(combo_backspace, KC_BSPC),
+    
+    // German umlaut combos
+    COMBO(combo_ae, KC_QUOT),
+    COMBO(combo_oe, KC_SCLN),
+    COMBO(combo_ue, KC_LBRC),
 };
 
 // end Combos
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
     // clang-format off
 
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
         CKC_A, CKC_R, CKC_S, CKC_T, KC_G,                                                                     KC_M, CKC_N, CKC_E, CKC_I, CKC_O,
-        KC_Y, KC_X, KC_C, KC_D, KC_V,                                                              KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
+        KC_Y, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
                 CKC_ESC, CKC_SPC, CKC_TAB,                                                                         KC_BSPC, CKC_ENT, KC_DEL
     ),
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
@@ -114,13 +125,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_SYM] = LAYOUT_split_3x5_3(
         RALT(KC_8) , LSFT(KC_6),   LSFT(KC_RBRC),  LSFT(KC_2), XXXXXXX,                          RSFT(KC_EQUAL), KC_NONUS_BACKSLASH, KC_GRAVE, RSFT(KC_GRAVE), XXXXXXX,
-        RALT(KC_5), LSFT(KC_4), RALT(KC_L), LSFT(KC_7), KC_RBRC,                                   RSFT(KC_NONUS_HASH), LALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
+        RALT(KC_5), LSFT(KC_4), RALT(KC_L), LSFT(KC_7), KC_RBRC,                                   RSFT(KC_NONUS_HASH), RALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
         LSFT(KC_MINUS), LSFT(KC_1), RSFT(KC_5), KC_NONUS_HASH, RALT(KC_7),                      KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
                 LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                                       XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
         XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-        LCTL_T(XXXXXXX), LALT_T(KC_F4),  LGUI_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        LCTL_T(XXXXXXX), RALT_T(KC_F4),  LGUI_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                              XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                         XXXXXXX, MO(_CFG), XXXXXXX
     ),
@@ -131,9 +142,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
-        LALT(KC_Q), XXXXXXX, XXXXXXX, LALT(KC_P), LALT(KC_B),                                             XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
-        LALT(KC_A), XXXXXXX, LALT(KC_S), RSFT_T(LALT(KC_T)), LALT(KC_G),                              XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
-        LALT(KC_Y), XXXXXXX, LALT(KC_C), LALT(KC_D), LALT(KC_V),                                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 XXXXXXX, XXXXXXX, XXXXXXX,                                                                          XXXXXXX, XXXXXXX, QK_BOOT
     )
     // clang-format on
