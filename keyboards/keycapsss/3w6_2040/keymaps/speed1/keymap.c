@@ -50,7 +50,32 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch (keycode) {
         // Modifier keys
         SMTD_MT(CKC_A, KC_A, KC_LEFT_CTRL)
-        SMTD_MT(CKC_R, KC_R, KC_LEFT_ALT)
+        case CKC_R: {
+            switch (action) {
+                case SMTD_ACTION_TOUCH:
+                    break;
+                case SMTD_ACTION_TAP:
+                    tap_code(KC_R);
+                    break;
+                case SMTD_ACTION_HOLD:
+                    switch (tap_count) {
+                        case 0:
+                        case 1:
+                            register_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
+                            break;
+                    }
+                    break;
+                case SMTD_ACTION_RELEASE:
+                    switch (tap_count) {
+                        case 0:
+                        case 1:
+                            unregister_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
+                            break;
+                    }
+                    break;
+            }
+            break;
+        }
         SMTD_MT(CKC_S, KC_S, KC_LEFT_GUI)
         SMTD_MT(CKC_T, KC_T, KC_LSFT)
         SMTD_MT(CKC_N, KC_N, KC_RSFT)
@@ -142,10 +167,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, KC_PENT
     ),
         [_CFG] = LAYOUT_split_3x5_3(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                XXXXXXX, XXXXXXX, XXXXXXX,                                                                          XXXXXXX, XXXXXXX, QK_BOOT
+        RALT(RGUI(RCTL(KC_Q))), XXXXXXX, XXXXXXX, RALT(RGUI(RCTL(KC_P))), RALT(RGUI(RCTL(KC_B))),                                     XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
+        RALT(RGUI(RCTL(KC_A))), XXXXXXX, RALT(RGUI(RCTL(KC_S))), RALT(RGUI(RCTL(KC_T))), RALT(RGUI(RCTL(KC_G))),                 XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
+        RALT(RGUI(RCTL(KC_Y))), XXXXXXX, RALT(RGUI(RCTL(KC_C))),  RALT(RGUI(RCTL(KC_D))), RALT(RGUI(RCTL(KC_V))),                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                XXXXXXX, XXXXXXX, XXXXXXX,                                                                                                                     XXXXXXX, XXXXXXX, QK_BOOT
     )
     // clang-format on
 };
