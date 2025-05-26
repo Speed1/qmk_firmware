@@ -17,6 +17,7 @@ enum layers {
 
 enum custom_keycodes {
     CKC_R = SAFE_RANGE,
+    CKC_I,
     CKC_NA,
     CKC_NR,
     CKC_NS,
@@ -69,11 +70,40 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
         }
         SMTD_MT(KC_S, KC_LEFT_GUI)
         SMTD_MT(KC_T, KC_LSFT)
+        SMTD_MT(KC_X, KC_LEFT_ALT)
         SMTD_MT(KC_N, KC_RSFT)
         SMTD_MT(KC_E, KC_RIGHT_GUI)
-        SMTD_MT(KC_I, KC_RIGHT_ALT)
+        case CKC_I: {
+            switch (action) {
+                case SMTD_ACTION_TOUCH:
+                    return SMTD_RESOLUTION_UNCERTAIN;
+                case SMTD_ACTION_TAP:
+                    if (is_caps_word_on()) {
+                        tap_code16(LSFT(KC_I)); // Capital I when caps word is on
+                    } else {
+                        tap_code(KC_I);      // Normal i otherwise
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+                case SMTD_ACTION_HOLD:
+                    switch (tap_count) {
+                        case 0:
+                        case 1:
+                            register_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
+                            break;
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+                case SMTD_ACTION_RELEASE:
+                    switch (tap_count) {
+                        case 0:
+                        case 1:
+                            unregister_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
+                            break;
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+            }
+        }
         SMTD_MT(KC_O, KC_RIGHT_CTRL)
-        SMTD_MT(KC_X, KC_LEFT_ALT)
+        SMTD_MT(KC_DOT, KC_RIGHT_ALT)
         // Num layer copy/paste
         SMTD_MT_ON_MKEY(CKC_NA, RGUI(KC_A), KC_LEFT_CTRL)
         SMTD_MT_ON_MKEY(CKC_NR, RGUI(KC_X), KC_LEFT_ALT)
@@ -136,7 +166,7 @@ const uint16_t PROGMEM combo_backspace[]   = {KC_F, KC_P, COMBO_END};
 
 // German umlaut combos
 const uint16_t PROGMEM combo_ae[] = {KC_A, CKC_R, COMBO_END};
-const uint16_t PROGMEM combo_oe[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_oe[] = {CKC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_ue[] = {KC_U, KC_Z, COMBO_END};
 
 /* OLD COMBO IMPLEMENTATION - KEEP COMMENTED FOR REFERENCE
@@ -234,7 +264,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
-        KC_A, CKC_R, KC_S, KC_T, KC_G,                                                                     KC_M, KC_N, KC_E, KC_I, KC_O,
+        KC_A, CKC_R, KC_S, KC_T, KC_G,                                                                     KC_M, KC_N, KC_E, CKC_I, KC_O,
         KC_Y, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
                 KC_ESC, KC_SPC, KC_TAB,                                                                         KC_BSPC, KC_ENT, KC_DEL
     ),
@@ -248,7 +278,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RALT(KC_8) , LSFT(KC_6),   LSFT(KC_RBRC),  LSFT(KC_2), XXXXXXX,                          RSFT(KC_EQUAL), KC_NONUS_BACKSLASH, KC_GRAVE, RSFT(KC_GRAVE), XXXXXXX,
         RALT(KC_5), LSFT(KC_4), RALT(KC_L), LSFT(KC_7), KC_RBRC,                                   RSFT(KC_NONUS_HASH), RALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
         LSFT(KC_MINUS), LSFT(KC_1), RSFT(KC_5), KC_NONUS_HASH, RALT(KC_7),                      KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
-                LSFT(KC_8), LSFT(KC_9), LSFT(KC_SLASH),                                                       XXXXXXX, XXXXXXX, XXXXXXX
+                LSFT(KC_SLASH), LSFT(KC_8), LSFT(KC_9),                                                        XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
         XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
