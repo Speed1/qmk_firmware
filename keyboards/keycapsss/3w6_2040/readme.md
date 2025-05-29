@@ -44,6 +44,6 @@ install dependencies
 build and flash firmware on both controllers
 
     ```bash
-    qmk compile -kb keycapsss/3w6_2040 -km vial
-    qmk flash -kb keycapsss/3w6_2040 -km vial
+    qmk compile -kb keycapsss/3w6_2040 -km speed1
+    qmk flash -kb keycapsss/3w6_2040 -km speed1
     ```
