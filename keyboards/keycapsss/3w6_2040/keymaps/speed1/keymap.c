@@ -6,11 +6,11 @@
 
 enum layers {
     _ALPHA_COLEMAK = 0,
-    _ALPHA_QWERTY,
+//    _ALPHA_QWERTY,
     _SYM,
     _NAV,
     _NUM,
-    _CFG,
+//    _CFG,
 };
 
 // start SM Tap Dance (sm_td or smtd for short) user library for QMK
@@ -122,7 +122,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
             }
         }
         // Layer toggles
-        SMTD_LT(KC_ESC, _CFG)
+        //SMTD_LT(KC_ESC, _CFG)
         SMTD_LT(KC_SPC, _NUM)
         SMTD_LT(KC_TAB, _NAV)
         SMTD_LT(KC_ENT, _SYM)
@@ -144,6 +144,7 @@ enum combo_events {
     COMBO_CAPS_WORD,
     COMBO_ENTER,
     COMBO_BACKSPACE,
+    COMBO_ESC,
     
     // German umlaut combos
     COMBO_AE,
@@ -163,6 +164,7 @@ const uint16_t PROGMEM combo_caps_lock[]   = {KC_P, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[]   = {KC_T, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_enter[]       = {KC_S, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_backspace[]   = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_esc[]      = {KC_Y, KC_X, COMBO_END};
 
 // German umlaut combos
 const uint16_t PROGMEM combo_ae[] = {KC_A, CKC_R, COMBO_END};
@@ -197,6 +199,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_CAPS_WORD] = COMBO_ACTION(combo_caps_word),
     [COMBO_ENTER] = COMBO_ACTION(combo_enter),
     [COMBO_BACKSPACE] = COMBO_ACTION(combo_backspace),
+    [COMBO_ESC] = COMBO_ACTION(combo_esc),
     [COMBO_AE] = COMBO_ACTION(combo_ae),
     [COMBO_OE] = COMBO_ACTION(combo_oe),
     [COMBO_UE] = COMBO_ACTION(combo_ue),
@@ -239,6 +242,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code16(KC_BSPC);
             }
             break;
+        case COMBO_ESC:
+            if (pressed) {
+                tap_code16(KC_ESC);
+            }
+            break;
         case COMBO_AE:
             if (pressed) {
                 tap_code16(KC_QUOT);
@@ -266,37 +274,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
         KC_A, CKC_R, KC_S, KC_T, KC_G,                                                                         KC_M, KC_N, KC_E, CKC_I, KC_O,
         KC_Y, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
-                KC_ESC, KC_SPC, KC_TAB,                                                                         KC_BSPC, KC_ENT, KC_DEL
+                XXXXXXX, KC_SPC, KC_TAB,                                                                         KC_BSPC, KC_ENT, XXXXXXX
     ),
-    [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
+/*    [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
         KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,                                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LSFT_T(KC_F), KC_G,                                KC_H, RSFT_T(KC_J), RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN),
         KC_Z, KC_X,    KC_C,    KC_V,    KC_B,                                                                 KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
              LT(_CFG,KC_ESCAPE), LT(_NUM,KC_SPC), LT(_NAV, KC_TAB),                                      KC_BSPC, LT(_SYM, KC_ENT), KC_DEL
-    ),
+    ),*/
     [_SYM] = LAYOUT_split_3x5_3(
         RALT(KC_8) , LSFT(KC_6),   LSFT(KC_RBRC),  LSFT(KC_2), XXXXXXX,                          RSFT(KC_EQUAL), KC_NONUS_BACKSLASH, KC_GRAVE, RSFT(KC_GRAVE), XXXXXXX,
         RALT(KC_5), LSFT(KC_4), RALT(KC_L), LSFT(KC_7), KC_RBRC,                                   RSFT(KC_NONUS_HASH), RALT(DE_N), XXXXXXX, XXXXXXX, XXXXXXX,
         LSFT(KC_MINUS), LSFT(KC_1), RSFT(KC_5), KC_NONUS_HASH, RALT(KC_7),                      KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
-                LSFT(KC_SLASH), LSFT(KC_8), LSFT(KC_9),                                                        XXXXXXX, XXXXXXX, XXXXXXX
+                XXXXXXX, LSFT(KC_8), LSFT(KC_9),                                                        XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_3(
-        XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 QK_BOOT, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
         LCTL_T(XXXXXXX), RALT_T(KC_F4),  LGUI_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                              XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
-                  XXXXXXX, XXXXXXX, XXXXXXX,                                                                         XXXXXXX, MO(_CFG), XXXXXXX
+                  XXXXXXX, XXXXXXX, XXXXXXX,                                                                         KC_DEL, XXXXXXX, XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_3(
         KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, XXXXXXX,                                                     KC_RBRC,  KC_7,  KC_8,  KC_9,  RALT(KC_9),
         CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Y),                                                               RSFT(KC_0),  KC_4,  KC_5,  KC_6, RALT(KC_6),
         CKC_NY, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         RSFT(RALT(DE_7)),  KC_1,  KC_2,  KC_3, KC_DOT,
-                  XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, KC_PENT
+                  XXXXXXX, XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0, XXXXXXX
     ),
-        [_CFG] = LAYOUT_split_3x5_3(
+ /*       [_CFG] = LAYOUT_split_3x5_3(
         RALT(RGUI(RCTL(KC_Q))), XXXXXXX, XXXXXXX, RALT(RGUI(RCTL(KC_P))), RALT(RGUI(RCTL(KC_B))),                                     XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
         RALT(RGUI(RCTL(KC_A))), XXXXXXX, RALT(RGUI(RCTL(KC_S))), RALT(RGUI(RCTL(KC_T))), RALT(RGUI(RCTL(KC_G))),                 XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
         RALT(RGUI(RCTL(KC_Y))), XXXXXXX, RALT(RGUI(RCTL(KC_C))),  RALT(RGUI(RCTL(KC_D))), RALT(RGUI(RCTL(KC_V))),                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 XXXXXXX, XXXXXXX, XXXXXXX,                                                                                                                     XXXXXXX, XXXXXXX, QK_BOOT
-    )
+    )*/
     // clang-format on
 };
