@@ -164,7 +164,7 @@ const uint16_t PROGMEM combo_caps_lock[]   = {KC_P, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[]   = {KC_T, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_enter[]       = {KC_S, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_backspace[]   = {KC_F, KC_P, COMBO_END};
-const uint16_t PROGMEM combo_esc[]      = {KC_Y, KC_X, COMBO_END};
+const uint16_t PROGMEM combo_esc[]      = {KC_X, KC_D, COMBO_END};
 
 // German umlaut combos
 const uint16_t PROGMEM combo_ae[] = {KC_A, CKC_R, COMBO_END};
