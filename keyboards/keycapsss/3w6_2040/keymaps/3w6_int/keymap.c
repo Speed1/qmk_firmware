@@ -6,11 +6,11 @@
 
 enum layers {
     _ALPHA_COLEMAK = 0,
-    _ALPHA_QWERTY,
+//    _ALPHA_QWERTY,
     _SYM,
     _NAV,
     _NUM,
-    _CFG,
+//    _CFG,
 };
 
 // start SM Tap Dance (sm_td or smtd for short) user library for QMK
