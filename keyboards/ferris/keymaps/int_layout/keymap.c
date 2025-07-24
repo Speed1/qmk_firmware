@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-#include "keymap_german_mac_iso.h"
 
 enum layers {
     _ALPHA_COLEMAK = 0,
@@ -22,7 +21,7 @@ enum custom_keycodes {
     CKC_NR,
     CKC_NS,
     CKC_NT,
-    CKC_NY,
+    CKC_NZ,
 };
 
 #include "sm_td.h"
@@ -110,7 +109,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
         SMTD_MT_ON_MKEY(CKC_NS, RGUI(KC_C), KC_LEFT_GUI)
         SMTD_MT_ON_MKEY(CKC_NT, RGUI(KC_V), KC_LSFT)
         // select entire row
-        case CKC_NY: {
+        case CKC_NZ: {
             switch (action) {
                 case SMTD_ACTION_TOUCH:
                     return SMTD_RESOLUTION_UNCERTAIN;
@@ -171,7 +170,7 @@ const uint16_t PROGMEM combo_esc[]      = {KC_X, KC_D, COMBO_END};
 // German umlaut combos
 const uint16_t PROGMEM combo_ae[] = {KC_A, CKC_R, COMBO_END};
 const uint16_t PROGMEM combo_oe[] = {CKC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_ue[] = {KC_U, KC_Z, COMBO_END};
+const uint16_t PROGMEM combo_ue[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM combo_ss[] = {KC_W, KC_F, COMBO_END};
 
 /* OLD COMBO IMPLEMENTATION - KEEP COMMENTED FOR REFERENCE
@@ -298,9 +297,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format off
 
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_2(
-        KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Z,    KC_MINS,
+        KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Y,    KC_MINS,
         KC_A, CKC_R, KC_S, KC_T, KC_G,                                                                         KC_M, KC_N, KC_E, CKC_I, KC_O,
-        KC_Y, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
+        KC_Z, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
                 KC_SPC, KC_TAB,                                                                             KC_BSPC, KC_ENT
     ),
 /*    [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
@@ -311,8 +310,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),*/
     [_SYM] = LAYOUT_split_3x5_2(
         LSFT(KC_LBRC) , LSFT(KC_7),   LSFT(KC_8),  LSFT(KC_QUOT), XXXXXXX,                          KC_GRAVE, LSFT(KC_6), LSFT(KC_COMMA), LSFT(KC_DOT), XXXXXXX,
-        KC_LBRC, LSFT(KC_4), LSFT(KC_2), KC_SLASH, LSFT(KC_EQUAL),                                   KC_QUOTE, LSFT(KC_GRAVE), XXXXXXX, XXXXXXX, XXXXXXX,
-        LSFT(KC_SLASH), LSFT(KC_1), RSFT(KC_5), LSFT(KC_3), LSFT(KC_BACKSLASH),                      KC_EQUAL, XXXXXXX, KC_MINS, XXXXXXX, XXXXXXX,
+        KC_LBRC, LSFT(KC_4), LSFT(KC_2), KC_SLASH, LSFT(KC_EQUAL),                                   KC_QUOTE, LSFT(KC_GRAVE), KC_SCLN, LSFT(KC_SCLN), XXXXXXX,
+        LSFT(KC_SLASH), LSFT(KC_1), RSFT(KC_5), LSFT(KC_3), LSFT(KC_BACKSLASH),                      KC_EQUAL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 LSFT(KC_9), LSFT(KC_0),                                                        XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_2(
@@ -324,7 +323,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      [_NUM] = LAYOUT_split_3x5_2(
         KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, XXXXXXX,                                                     LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
         CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Y),                                                               KC_EQUAL,  KC_4,  KC_5,  KC_6, KC_RBRC,
-        CKC_NY, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         KC_BACKSLASH,  KC_1,  KC_2,  KC_3, KC_DOT,
+        CKC_NZ, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         KC_BACKSLASH,  KC_1,  KC_2,  KC_3, KC_DOT,
                   XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0
     ),
  /*       [_CFG] = LAYOUT_split_3x5_3(

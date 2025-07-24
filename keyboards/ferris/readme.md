@@ -26,6 +26,6 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 build and flash firmware on both controllers
 
     ```bash
-    make CONVERT_TO=promicro_rp2040 ferris/sweep:speed1
-    cp ferris_sweep_speed1_promicro_rp2040.uf2 /Volumes/RPI-RP2
+    make CONVERT_TO=rp2040_ce ferris/sweep:int_layout
+    sleep 3 && cp ferris_sweep_int_layout_rp2040_ce.uf2 /Volumes/RPI-RP2
     ```
