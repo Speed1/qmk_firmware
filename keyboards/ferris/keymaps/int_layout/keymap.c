@@ -252,35 +252,60 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         case COMBO_AE:
             if (pressed) {
+                // Store current modifier state and check if shift was held
+                uint8_t mods = get_mods();
+                bool shift_held = mods & MOD_MASK_SHIFT;
+                // Clear all modifiers so the dead key sequence works cleanly
+                // The LALT(KC_U) dead key sequence gets interfered with by active modifiers
+                clear_mods();
+                // Send the dead key sequence for umlaut (Option+U on Mac, Alt+U elsewhere)
                 tap_code16(LALT(KC_U));
-                wait_ms(10);
-                if (get_mods() & MOD_MASK_SHIFT) {
+                // Send the vowel (uppercase if shift was originally held)
+                if (shift_held) {
                     tap_code16(LSFT(KC_A));  // Ä
                 } else {
                     tap_code(KC_A);          // ä
                 }
+                // Restore the original modifier state
+                set_mods(mods);
             }
             break;
         case COMBO_OE:
             if (pressed) {
+                // Store current modifier state and check if shift was held
+                uint8_t mods = get_mods();
+                bool shift_held = mods & MOD_MASK_SHIFT;
+                // Clear all modifiers so the dead key sequence works cleanly
+                clear_mods();
+                // Send the dead key sequence for umlaut
                 tap_code16(LALT(KC_U));
-                wait_ms(10);
-                if (get_mods() & MOD_MASK_SHIFT) {
+                // Send the vowel (uppercase if shift was originally held)
+                if (shift_held) {
                     tap_code16(LSFT(KC_O));  // Ö
                 } else {
                     tap_code(KC_O);          // ö
                 }
+                // Restore the original modifier state
+                set_mods(mods);
             }
             break;
         case COMBO_UE:
             if (pressed) {
+                // Store current modifier state and check if shift was held
+                uint8_t mods = get_mods();
+                bool shift_held = mods & MOD_MASK_SHIFT;
+                // Clear all modifiers so the dead key sequence works cleanly
+                clear_mods();
+                // Send the dead key sequence for umlaut
                 tap_code16(LALT(KC_U));
-                wait_ms(10);
-                if (get_mods() & MOD_MASK_SHIFT) {
+                // Send the vowel (uppercase if shift was originally held)
+                if (shift_held) {
                     tap_code16(LSFT(KC_U));  // Ü
                 } else {
                     tap_code(KC_U);          // ü
                 }
+                // Restore the original modifier state
+                set_mods(mods);
             }
             break;
         case COMBO_SS:
@@ -311,7 +336,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SYM] = LAYOUT_split_3x5_2(
         LSFT(KC_LBRC) , LSFT(KC_7),   LSFT(KC_8),  LSFT(KC_QUOT), XXXXXXX,                          KC_GRAVE, LSFT(KC_6), LSFT(KC_COMMA), LSFT(KC_DOT), XXXXXXX,
         KC_LBRC, LSFT(KC_4), LSFT(KC_2), KC_SLASH, LSFT(KC_EQUAL),                                   KC_QUOTE, LSFT(KC_GRAVE), KC_SCLN, LSFT(KC_SCLN), XXXXXXX,
-        LSFT(KC_SLASH), LSFT(KC_1), RSFT(KC_5), LSFT(KC_3), LSFT(KC_BACKSLASH),                      KC_EQUAL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        LSFT(KC_SLASH), LSFT(KC_1), RSFT(KC_5), LSFT(KC_3), LSFT(KC_BACKSLASH),                      RALT(KC_E), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 LSFT(KC_9), LSFT(KC_0),                                                        XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_2(
