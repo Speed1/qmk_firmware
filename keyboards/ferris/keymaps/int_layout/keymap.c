@@ -5,31 +5,24 @@
 
 enum layers {
     _ALPHA_COLEMAK = 0,
-//    _ALPHA_QWERTY,
     _SYM,
     _NAV,
     _NUM,
-//    _CFG,
 };
-
-// start SM Tap Dance (sm_td or smtd for short) user library for QMK
 
 enum custom_keycodes {
-    CKC_R = SAFE_RANGE,
-    CKC_I,
-    CKC_NA,
-    CKC_NR,
-    CKC_NS,
-    CKC_NT,
-    CKC_NZ,
+    SEL_ROW = SAFE_RANGE,
 };
 
-#include "sm_td.h"
-
-// Process tap dance records
+// Process custom keycodes (standard QMK)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_smtd(keycode, record)) {
-        return false;
+    switch (keycode) {
+        case SEL_ROW:
+            if (record->event.pressed) {
+                tap_code16(KC_END);
+                tap_code16(LSFT(KC_HOME));
+            }
+            return false;
     }
     return true;
 }
@@ -58,104 +51,26 @@ bool caps_word_press_user(uint16_t keycode) {
     }
 }
 
-smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
-    switch (keycode) {
-        // Modifier keys
-        SMTD_MT(KC_A, KC_LEFT_CTRL)
-        case CKC_R: {
-            switch (action) {
-                case SMTD_ACTION_TOUCH:
-                    return SMTD_RESOLUTION_UNCERTAIN;
-                case SMTD_ACTION_TAP:
-                    if (is_caps_word_on()) {
-                        tap_code16(LSFT(KC_R)); // Capital R when caps word is on
-                    } else {
-                        tap_code(KC_R);      // Normal r otherwise
-                    }
-                    return SMTD_RESOLUTION_DETERMINED;
-                case SMTD_ACTION_HOLD:
-                    switch (tap_count) {
-                        case 0:
-                        case 1:
-                            register_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
-                            break;
-                    }
-                    return SMTD_RESOLUTION_DETERMINED;
-                case SMTD_ACTION_RELEASE:
-                    switch (tap_count) {
-                        case 0:
-                        case 1:
-                            unregister_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
-                            break;
-                    }
-                    return SMTD_RESOLUTION_DETERMINED;
-            }
-        }
-        SMTD_MT(KC_S, KC_LEFT_GUI)
-        SMTD_MT(KC_T, KC_LSFT)
-        SMTD_MT(KC_X, KC_LEFT_ALT)
-        SMTD_MT(KC_N, KC_RSFT)
-        SMTD_MT(KC_E, KC_RIGHT_GUI)
-        case CKC_I: {
-            switch (action) {
-                case SMTD_ACTION_TOUCH:
-                    return SMTD_RESOLUTION_UNCERTAIN;
-                case SMTD_ACTION_TAP:
-                    if (is_caps_word_on()) {
-                        tap_code16(LSFT(KC_I)); // Capital I when caps word is on
-                    } else {
-                        tap_code(KC_I);      // Normal i otherwise
-                    }
-                    return SMTD_RESOLUTION_DETERMINED;
-                case SMTD_ACTION_HOLD:
-                    switch (tap_count) {
-                        case 0:
-                        case 1:
-                            register_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
-                            break;
-                    }
-                    return SMTD_RESOLUTION_DETERMINED;
-                case SMTD_ACTION_RELEASE:
-                    switch (tap_count) {
-                        case 0:
-                        case 1:
-                            unregister_mods(MOD_BIT(KC_LEFT_ALT) | MOD_BIT(KC_LEFT_CTRL) | MOD_BIT(KC_LEFT_GUI));
-                            break;
-                    }
-                    return SMTD_RESOLUTION_DETERMINED;
-            }
-        }
-        SMTD_MT(KC_O, KC_RIGHT_CTRL)
-        SMTD_MT(KC_DOT, KC_RIGHT_ALT)
-        // Num layer copy/paste
-        SMTD_MT_ON_MKEY(CKC_NA, RGUI(KC_A), KC_LEFT_CTRL)
-        SMTD_MT_ON_MKEY(CKC_NR, RGUI(KC_X), KC_LEFT_ALT)
-        SMTD_MT_ON_MKEY(CKC_NS, RGUI(KC_C), KC_LEFT_GUI)
-        SMTD_MT_ON_MKEY(CKC_NT, RGUI(KC_V), KC_LSFT)
-        // select entire row
-        case CKC_NZ: {
-            switch (action) {
-                case SMTD_ACTION_TOUCH:
-                    return SMTD_RESOLUTION_UNCERTAIN;
-                case SMTD_ACTION_TAP:
-                    tap_code16(KC_END);
-                    tap_code16(LSFT(KC_HOME));
-                    return SMTD_RESOLUTION_DETERMINED;
-                default:
-                    return SMTD_RESOLUTION_UNHANDLED;
-            }
-        }
-        // Layer toggles
-        //SMTD_LT(KC_ESC, _CFG)
-        SMTD_LT(KC_SPC, _NUM)
-        SMTD_LT(KC_TAB, _NAV)
-        SMTD_LT(KC_ENT, _SYM)
-    }
+// Home row mods using standard QMK MT() macros
+#define HR_A MT(MOD_LCTL, KC_A)
+#define HR_R MT(MOD_RALT | MOD_RCTL | MOD_RGUI, KC_R)  // Hyper key (Alt + Ctrl + Gui)
+#define HR_S MT(MOD_LGUI, KC_S)
+#define HR_T MT(MOD_LSFT, KC_T)
+#define HR_N MT(MOD_RSFT, KC_N)
+#define HR_E MT(MOD_RGUI, KC_E)
+#define HR_I MT(MOD_RALT | MOD_RCTL | MOD_RGUI, KC_I)  // Hyper key (Alt + Ctrl + Gui)
+#define HR_O MT(MOD_RCTL, KC_O)
 
-    return SMTD_RESOLUTION_UNHANDLED;
-}
+// Additional mod-taps for bottom row
+#define HR_X MT(MOD_LALT, KC_X)     // Alt on hold
+#define HR_DOT MT(MOD_RALT, KC_DOT) // Alt on hold
 
-// end SM Tap Dance (sm_td or smtd for short) user library for QMK
+// Layer taps using standard QMK LT() macros
+#define LT_SPC LT(_NUM, KC_SPC)
+#define LT_TAB LT(_NAV, KC_TAB)
+#define LT_ENT LT(_SYM, KC_ENT)
+
+// Standard QMK home row mods and layer taps implementation
 
 enum combo_events {
     // System combos
@@ -186,14 +101,14 @@ const uint16_t PROGMEM combo_screenshot[]  = {KC_C, KC_D, COMBO_END};
 
 // Text editing combos
 const uint16_t PROGMEM combo_caps_lock[]   = {KC_P, KC_L, COMBO_END};
-const uint16_t PROGMEM combo_caps_word[]   = {KC_T, KC_N, COMBO_END};
-const uint16_t PROGMEM combo_enter[]       = {KC_S, KC_T, COMBO_END};
+const uint16_t PROGMEM combo_caps_word[]   = {HR_T, HR_N, COMBO_END};
+const uint16_t PROGMEM combo_enter[]       = {HR_S, HR_T, COMBO_END};
 const uint16_t PROGMEM combo_backspace[]   = {KC_F, KC_P, COMBO_END};
-const uint16_t PROGMEM combo_esc[]      = {KC_X, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_esc[]      = {HR_X, KC_D, COMBO_END};
 
 // German umlaut combos
-const uint16_t PROGMEM combo_ae[] = {KC_A, CKC_R, COMBO_END};
-const uint16_t PROGMEM combo_oe[] = {CKC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_ae[] = {HR_A, HR_R, COMBO_END};
+const uint16_t PROGMEM combo_oe[] = {HR_I, HR_O, COMBO_END};
 const uint16_t PROGMEM combo_ue[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM combo_ss[] = {KC_W, KC_F, COMBO_END};
 
@@ -347,16 +262,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_2(
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Y,    KC_MINS,
-        KC_A, CKC_R, KC_S, KC_T, KC_G,                                                                         KC_M, KC_N, KC_E, CKC_I, KC_O,
-        KC_Z, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
-                KC_SPC, KC_TAB,                                                                             KC_BSPC, KC_ENT
+        HR_A,     HR_R,    HR_S,    HR_T,    KC_G,                                                             KC_M,    HR_N,    HR_E,    HR_I,    HR_O,
+        KC_Z,     HR_X,    KC_C,    KC_D,    KC_V,                                                             KC_K,    KC_H,    KC_COMMA, HR_DOT,    KC_SLASH,
+                LT_SPC, LT_TAB,                                                                             KC_BSPC, LT_ENT
     ),
-/*    [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
-        KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,                                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LSFT_T(KC_F), KC_G,                                KC_H, RSFT_T(KC_J), RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN),
-        KC_Z, KC_X,    KC_C,    KC_V,    KC_B,                                                                 KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-             LT(_CFG,KC_ESCAPE), LT(_NUM,KC_SPC), LT(_NAV, KC_TAB),                                      KC_BSPC, LT(_SYM, KC_ENT), KC_DEL
-    ),*/
     [_SYM] = LAYOUT_split_3x5_2(
         LSFT(KC_LBRC) , LSFT(KC_7),   LSFT(KC_8),  LSFT(KC_QUOT), LSFT(KC_EQUAL),                          KC_GRAVE, LSFT(KC_6), LSFT(KC_COMMA), LSFT(KC_DOT), XXXXXXX,
         KC_LBRC, LSFT(KC_4), LSFT(KC_2), KC_SLASH, KC_BACKSLASH,                                   KC_QUOTE, LSFT(KC_GRAVE), KC_SCLN, LSFT(KC_SCLN), XXXXXXX,
@@ -371,15 +280,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      [_NUM] = LAYOUT_split_3x5_2(
         KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, XXXXXXX,                                                     LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
-        CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Z),                                                               KC_EQUAL,  KC_4,  KC_5,  KC_6, KC_RBRC,
-        CKC_NZ, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         KC_BACKSLASH,  KC_1,  KC_2,  KC_3, KC_DOT,
+        RGUI(KC_A), RGUI(KC_X), RGUI(KC_C), RGUI(KC_V), RGUI(KC_Z),                                         KC_EQUAL,        KC_4,  KC_5,  KC_6,  KC_RBRC,
+        SEL_ROW, KC_MPRV, KC_MPLY,    KC_MNXT, XXXXXXX,                                                     KC_BACKSLASH,   KC_1,  KC_2,  KC_3,  KC_DOT,
                   XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0
     ),
- /*       [_CFG] = LAYOUT_split_3x5_3(
-        RALT(RGUI(RCTL(KC_Q))), XXXXXXX, XXXXXXX, RALT(RGUI(RCTL(KC_P))), RALT(RGUI(RCTL(KC_B))),                                     XXXXXXX, XXXXXXX, KC_LBRC,DF(_ALPHA_COLEMAK), DF(_ALPHA_QWERTY),
-        RALT(RGUI(RCTL(KC_A))), XXXXXXX, RALT(RGUI(RCTL(KC_S))), RALT(RGUI(RCTL(KC_T))), RALT(RGUI(RCTL(KC_G))),                 XXXXXXX, RSFT_T(XXXXXXX), XXXXXXX, XXXXXXX, KC_SCLN,
-        RALT(RGUI(RCTL(KC_Y))), XXXXXXX, RALT(RGUI(RCTL(KC_C))),  RALT(RGUI(RCTL(KC_D))), RALT(RGUI(RCTL(KC_V))),                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                XXXXXXX, XXXXXXX, XXXXXXX,                                                                                                                     XXXXXXX, XXXXXXX, QK_BOOT
-    )*/
-    // clang-format on
 };
