@@ -53,7 +53,7 @@ bool caps_word_press_user(uint16_t keycode) {
 
 // Home row mods using standard QMK MT() macros
 #define HR_A MT(MOD_LCTL, KC_A)
-#define HR_R MT(MOD_LALT | MOD_LCTL | MOD_LGUI, KC_R)  // Hyper key (Alt + Ctrl + Gui)
+#define HR_R MT(MOD_RALT | MOD_RCTL | MOD_RGUI, KC_R)  // Hyper key (Alt + Ctrl + Gui)
 #define HR_S MT(MOD_LGUI, KC_S)
 #define HR_T MT(MOD_LSFT, KC_T)
 #define HR_N MT(MOD_RSFT, KC_N)
