@@ -1,4 +1,4 @@
-/* Copyright 2024 Stanislav Markin (https://github.com/stasmarkin)
+/* Copyright 2025 Stanislav Markin (https://github.com/stasmarkin)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,8 +18,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Version: 0.5.0
- * Date: 2025-08-06
+ * Version: 0.5.2
+ * Date: 2025-08-23
  */
 #pragma once
 
@@ -925,7 +925,7 @@ void smtd_handle_action(smtd_state *state, smtd_action action) {
     }
 
     if (smtd_worst_resolution_before(state) < SMTD_RESOLUTION_DETERMINED) {
-        SMTD_DEBUG("%s %s is deffered",
+        SMTD_DEBUG("%s %s is deferred",
                    smtd_state_to_str(state),
                    smtd_action_to_str(action));
         return;
@@ -1168,7 +1168,7 @@ uint32_t get_smtd_timeout_default(smtd_timeout timeout) {
 
 uint16_t smtd_current_keycode(keypos_t *key) {
     uint8_t current_layer = get_highest_layer(layer_state);
-    return keymaps[current_layer][key->row][key->col];
+    return keymap_key_to_keycode(current_layer, *key);
 }
 
 bool smtd_feature_enabled_or_default(smtd_state *state, smtd_feature feature) {

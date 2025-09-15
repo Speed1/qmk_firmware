@@ -13,7 +13,7 @@ layers:
     - {t: BSpace}
     - {h: Sym,   t: Enter}
   NUM:
-    - ["Mute", "Vol down", "Search", "Vol up", "", "+", "7", "8", "9", "}"]
+    - ["Mute", "Vol down", "Search", "Vol up", "CMD+I", "+", "7", "8", "9", "}"]
     - ["Select all", "cut", "copy", "paste", "undo", "=", "4", "5", "6", "]"]
     - [Select row, Media prev, "Media pause", "Media forw", "", "\\", "1", "2", "3", "."]
     - {type: held}

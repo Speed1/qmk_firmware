@@ -1,4 +1,3 @@
-//#define COMBO_ACTION
-//#define PERMISSIVE_HOLD
-//#define CHORDAL_HOLD
+#define PERMISSIVE_HOLD
+#define CHORDAL_HOLD
 #define TAPPING_TERM 170
