@@ -108,7 +108,60 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
             }
         }
         SMTD_MT(KC_O, KC_RIGHT_CTRL)
-        SMTD_MT(KC_DOT, KC_RIGHT_ALT)
+        case KC_DOT: {
+            switch (action) {
+                case SMTD_ACTION_TOUCH:
+                    return SMTD_RESOLUTION_UNCERTAIN;
+                case SMTD_ACTION_TAP:
+                    if (tap_count == 0) {
+                        tap_code16(KC_DOT);
+                    } else if (tap_count == 1) {
+                        // Double-tap: ':'
+                        tap_code16(LSFT(KC_SCLN));
+                    } else {
+                        // triple-tap or more: '...'
+                        tap_code16(KC_DOT);
+                        tap_code16(KC_DOT);
+                        tap_code16(KC_DOT);
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+                case SMTD_ACTION_HOLD:
+                    switch (tap_count) {
+                        case 0:
+                        case 1:
+                            register_mods(MOD_BIT(KC_RIGHT_ALT));
+                            send_keyboard_report();
+                            break;
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+                case SMTD_ACTION_RELEASE:
+                    switch (tap_count) {
+                        case 0:
+                        case 1:
+                            unregister_mods(MOD_BIT(KC_RIGHT_ALT));
+                            send_keyboard_report();
+                            break;
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+            }
+        }
+        case KC_COMMA: {
+            switch (action) {
+                case SMTD_ACTION_TOUCH:
+                    return SMTD_RESOLUTION_UNCERTAIN;
+                case SMTD_ACTION_TAP:
+                    if (tap_count == 0) {
+                        tap_code16(KC_COMMA);
+                    } else {
+                        // Double-tap: ';'
+                        tap_code16(KC_SCLN);
+                    }
+                    return SMTD_RESOLUTION_DETERMINED;
+                case SMTD_ACTION_HOLD:
+                case SMTD_ACTION_RELEASE:
+                    return SMTD_RESOLUTION_DETERMINED;
+            }
+        }
         // Num layer copy/paste
         SMTD_MT_ON_MKEY(CKC_NA, RGUI(KC_A), KC_LEFT_CTRL)
         SMTD_MT_ON_MKEY(CKC_NR, RGUI(KC_X), KC_LEFT_ALT)
@@ -140,10 +193,24 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
 uint32_t get_smtd_timeout(uint16_t keycode, smtd_timeout timeout) {
     switch (keycode) {
         case KC_SPC:
-            if (timeout == SMTD_TIMEOUT_TAP) return 300;
+            if (timeout == SMTD_TIMEOUT_TAP) return 200;
+        case KC_DOT:
+        case KC_COMMA:
+            if (timeout == SMTD_TIMEOUT_SEQUENCE) return 200; // longer double-tap window
     }
 
     return get_smtd_timeout_default(timeout);
+}
+
+bool smtd_feature_enabled(uint16_t keycode, smtd_feature feature) {
+    if (feature == SMTD_FEATURE_AGGREGATE_TAPS) {
+        switch (keycode) {
+            case KC_DOT:
+            case KC_COMMA:
+                return true; // Wait for sequence end to decide single vs double tap
+        }
+    }
+    return false;
 }
 // end SM Tap Dance (sm_td or smtd for short) user library for QMK
 
