@@ -193,7 +193,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
 uint32_t get_smtd_timeout(uint16_t keycode, smtd_timeout timeout) {
     switch (keycode) {
         case KC_SPC:
-            if (timeout == SMTD_TIMEOUT_TAP) return 200;
+            if (timeout == SMTD_TIMEOUT_TAP) return 180;
         case KC_DOT:
         case KC_COMMA:
             if (timeout == SMTD_TIMEOUT_SEQUENCE) return 200; // longer double-tap window
