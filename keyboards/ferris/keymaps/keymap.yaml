@@ -5,7 +5,7 @@ layout:
   layout_name: LAYOUT_split_3x5_2
 layers:
   DEF:
-    - [Q, W, F, P, B, J, U, U, Y, "-"]
+    - [Q, W, F, P, B, J, L, U, Y, "-"]
     - [{h: Ctrl, t: A}, {h: Hyperkey, t: R}, {h: Gui, t: S}, {h: Shift, t: T }, G, M, {h: Shift, t: N}, {h: Gui, t: E}, {h: Hyperkey, t: I}, {h: Ctrl, t: "O"}]
     - [Z, {h: Alt, t: X}, C, D, V, K, H, ",", {h: Alt, t: .}, "/"]
     - {h: Num,   t: Space}
@@ -44,3 +44,7 @@ combos:
   - {p: [12, 13], k: "Enter", l: ["DEF"]}
   - {p: [21, 23], k: "Esc", l: ["DEF"], a: bottom, o: 0.1}
   - {p: [22, 23], k: "Screenshot", l: ["DEF"]}
+  - {p: [10, 11], k: "Ä", l: ["DEF"]}
+  - {p: [1, 2], k: "ß", l: ["DEF"]}
+  - {p: [7, 8], k: "Ü", l: ["DEF"]}
+  - {p: [18, 19], k: "Ö", l: ["DEF"]}
