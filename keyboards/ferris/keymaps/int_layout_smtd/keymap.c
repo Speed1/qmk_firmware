@@ -180,6 +180,9 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     return SMTD_RESOLUTION_UNHANDLED;
             }
         }
+        // Function Keys
+        SMTD_MT(KC_F5, KC_LEFT_GUI)
+        SMTD_MT(KC_F6, KC_LEFT_SHIFT)
         // Layer toggles
         //SMTD_LT(KC_ESC, _CFG)
         SMTD_LT(KC_SPC, _NUM)
@@ -420,9 +423,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_NAV] = LAYOUT_split_3x5_2(
         KC_ESC,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 QK_BOOT, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-        LCTL_T(XXXXXXX), RALT_T(KC_F4),  LGUI_T(KC_F5),  LSFT_T(KC_F6),  KC_F11,                     KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
-        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                              XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
-                   XXXXXXX, XXXXXXX,                                                                         KC_DEL, XXXXXXX
+        LCTL_T(XXXXXXX), KC_F4,  KC_F5,  KC_F6,  KC_F11,                                                      KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                             XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
+                   XXXXXXX, XXXXXXX,                                                                          KC_DEL, XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_2(
         KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, LGUI(KC_Y),                                                     LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
