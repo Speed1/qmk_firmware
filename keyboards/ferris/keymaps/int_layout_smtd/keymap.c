@@ -97,6 +97,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     }
                     return SMTD_RESOLUTION_DETERMINED;
             }
+            break;
         }
         SMTD_MT(KC_S, KC_LEFT_GUI)
         SMTD_MT(KC_T, KC_LSFT)
@@ -131,6 +132,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     }
                     return SMTD_RESOLUTION_DETERMINED;
             }
+            break;
         }
         SMTD_MT(KC_O, KC_RIGHT_CTRL)
         case KC_DOT: {
@@ -169,6 +171,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     }
                     return SMTD_RESOLUTION_DETERMINED;
             }
+            break;
         }
         case KC_COMMA: {
             switch (action) {
@@ -186,6 +189,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                 case SMTD_ACTION_RELEASE:
                     return SMTD_RESOLUTION_DETERMINED;
             }
+            break;
         }
         // Num layer copy/paste
         SMTD_MT_ON_MKEY(CKC_NA, RGUI(KC_A), KC_LEFT_CTRL)
@@ -204,6 +208,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                 default:
                     return SMTD_RESOLUTION_UNHANDLED;
             }
+            break;
         }
         // Function Keys
         SMTD_MT(KC_F5, KC_LEFT_GUI)
@@ -280,25 +285,6 @@ const uint16_t PROGMEM combo_oe[] = {CKC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_ue[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM combo_ss[] = {KC_W, KC_F, COMBO_END};
 
-/* OLD COMBO IMPLEMENTATION - KEEP COMMENTED FOR REFERENCE
-combo_t key_combos[] = {
-    // System combos
-    COMBO(combo_lock_device, LCTL(RGUI(KC_Q))),
-    COMBO(combo_close_app, RGUI(KC_Q)),
-    COMBO(combo_screenshot, LGUI(LSFT(KC_4))),
-    
-    // Text editing comboss
-    COMBO(combo_caps_lock, KC_CAPS),
-    COMBO(combo_caps_word, QK_CAPS_WORD_TOGGLE),
-    COMBO(combo_enter, KC_ENT),
-    COMBO(combo_backspace, KC_BSPC),
-    
-    // German umlaut combos
-    COMBO(combo_ae, KC_QUOT),
-    COMBO(combo_oe, KC_SCLN),
-    COMBO(combo_ue, KC_LBRC),
-};
-*/
 
 combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_LOCK_DEVICE] = COMBO_ACTION(combo_lock_device),
