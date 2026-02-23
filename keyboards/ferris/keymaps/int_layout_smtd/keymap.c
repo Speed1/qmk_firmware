@@ -3,6 +3,31 @@
 
 #include QMK_KEYBOARD_H
 
+
+// Helper function for sending German umlaut (ä, ö, ü, and their uppercase variants)
+void send_umlaut(uint16_t base_key) {
+    uint8_t mods = get_mods();
+    bool shift_held = mods & MOD_MASK_SHIFT;
+    clear_mods();
+    tap_code16(LALT(KC_U));
+    if (shift_held) {
+        switch (base_key) {
+            case KC_A:
+                tap_code16(LSFT(KC_A)); // Ä
+                break;
+            case KC_O:
+                tap_code16(LSFT(KC_O)); // Ö
+                break;
+            case KC_U:
+                tap_code16(LSFT(KC_U)); // Ü
+                break;
+        }
+    } else {
+        tap_code(base_key); // ä, ö, ü
+    }
+    set_mods(mods);
+}
+
 enum layers {
     _ALPHA_COLEMAK = 0,
 //    _ALPHA_QWERTY,
@@ -334,60 +359,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         case COMBO_AE:
             if (pressed) {
-                // Store current modifier state and check if shift was held
-                uint8_t mods = get_mods();
-                bool shift_held = mods & MOD_MASK_SHIFT;
-                // Clear all modifiers so the dead key sequence works cleanly
-                // The LALT(KC_U) dead key sequence gets interfered with by active modifiers
-                clear_mods();
-                // Send the dead key sequence for umlaut (Option+U on Mac, Alt+U elsewhere)
-                tap_code16(LALT(KC_U));
-                // Send the vowel (uppercase if shift was originally held)
-                if (shift_held) {
-                    tap_code16(LSFT(KC_A));  // Ä
-                } else {
-                    tap_code(KC_A);          // ä
-                }
-                // Restore the original modifier state
-                set_mods(mods);
+                send_umlaut(KC_A);
             }
             break;
         case COMBO_OE:
             if (pressed) {
-                // Store current modifier state and check if shift was held
-                uint8_t mods = get_mods();
-                bool shift_held = mods & MOD_MASK_SHIFT;
-                // Clear all modifiers so the dead key sequence works cleanly
-                clear_mods();
-                // Send the dead key sequence for umlaut
-                tap_code16(LALT(KC_U));
-                // Send the vowel (uppercase if shift was originally held)
-                if (shift_held) {
-                    tap_code16(LSFT(KC_O));  // Ö
-                } else {
-                    tap_code(KC_O);          // ö
-                }
-                // Restore the original modifier state
-                set_mods(mods);
+                send_umlaut(KC_O);
             }
             break;
         case COMBO_UE:
             if (pressed) {
-                // Store current modifier state and check if shift was held
-                uint8_t mods = get_mods();
-                bool shift_held = mods & MOD_MASK_SHIFT;
-                // Clear all modifiers so the dead key sequence works cleanly
-                clear_mods();
-                // Send the dead key sequence for umlaut
-                tap_code16(LALT(KC_U));
-                // Send the vowel (uppercase if shift was originally held)
-                if (shift_held) {
-                    tap_code16(LSFT(KC_U));  // Ü
-                } else {
-                    tap_code(KC_U);          // ü
-                }
-                // Restore the original modifier state
-                set_mods(mods);
+                send_umlaut(KC_U);
             }
             break;
         case COMBO_SS:
