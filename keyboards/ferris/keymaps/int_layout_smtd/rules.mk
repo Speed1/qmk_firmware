@@ -2,3 +2,7 @@ DEFERRED_EXEC_ENABLE = yes
 COMBO_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 PERMISSIVE_HOLD_ENABLE = yes
+# Change these from RP2040 to ATmega32U4 settings
+MCU = atmega32u4
+BOOTLOADER = caterina
+SPLIT_KEYBOARD = yes
