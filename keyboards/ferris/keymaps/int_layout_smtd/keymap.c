@@ -21,6 +21,9 @@ void send_umlaut(uint16_t base_key) {
             case KC_U:
                 tap_code16(LSFT(KC_U)); // Ü
                 break;
+            default:
+                tap_code16(KC_SPC); // cancel orphaned dead key
+                break;
         }
     } else {
         tap_code(base_key); // ä, ö, ü
@@ -187,7 +190,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     return SMTD_RESOLUTION_DETERMINED;
                 case SMTD_ACTION_HOLD:
                 case SMTD_ACTION_RELEASE:
-                    return SMTD_RESOLUTION_DETERMINED;
+                    return SMTD_RESOLUTION_UNHANDLED;
             }
             break;
         }
