@@ -255,6 +255,7 @@ enum combo_events {
     COMBO_SCREENSHOT,
     
     // Text editing combos
+    COMBO_DELETE_WORD,
     COMBO_CAPS_LOCK,
     COMBO_CAPS_WORD,
     COMBO_ENTER,
@@ -276,6 +277,7 @@ const uint16_t PROGMEM combo_close_app[]   = {KC_W, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_screenshot[]  = {KC_C, KC_D, COMBO_END};
 
 // Text editing combos
+const uint16_t PROGMEM combo_delete_word[] = {KC_P, KC_B, COMBO_END};
 const uint16_t PROGMEM combo_caps_lock[]   = {KC_T, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_caps_word[]   = {KC_P, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_enter[]       = {KC_S, KC_T, COMBO_END};
@@ -293,6 +295,7 @@ combo_t key_combos[COMBO_LENGTH] = {
     [COMBO_LOCK_DEVICE] = COMBO_ACTION(combo_lock_device),
     [COMBO_CLOSE_APP] = COMBO_ACTION(combo_close_app),
     [COMBO_SCREENSHOT] = COMBO_ACTION(combo_screenshot),
+    [COMBO_DELETE_WORD] = COMBO_ACTION(combo_delete_word),
     [COMBO_CAPS_LOCK] = COMBO_ACTION(combo_caps_lock),
     [COMBO_CAPS_WORD] = COMBO_ACTION(combo_caps_word),
     [COMBO_ENTER] = COMBO_ACTION(combo_enter),
@@ -319,6 +322,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case COMBO_SCREENSHOT:
             if (pressed) {
                 tap_code16(LGUI(LSFT(KC_4)));
+            }
+            break;
+        case COMBO_DELETE_WORD:
+            if (pressed) {
+                tap_code16(LALT(KC_BSPC));
             }
             break;
         case COMBO_CAPS_LOCK:
@@ -388,7 +396,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),*/
     [_SYM] = LAYOUT_split_3x5_2(
         LSFT(KC_LBRC) , LSFT(KC_7),   LSFT(KC_8),  LSFT(KC_QUOT), LSFT(KC_EQUAL),                          KC_GRAVE, LSFT(KC_6), LSFT(KC_COMMA), LSFT(KC_DOT), XXXXXXX,
-        KC_LBRC, LSFT(KC_4), LSFT(KC_2), KC_SLASH, KC_BACKSLASH,                                   KC_QUOTE, LSFT(KC_GRAVE), KC_SCLN, LSFT(KC_SCLN), XXXXXXX,
+        KC_LBRC, LSFT(KC_4), LSFT(KC_2), KC_BACKSLASH, XXXXXXX,                                   KC_QUOTE, LSFT(KC_GRAVE), KC_SCLN, LSFT(KC_SCLN), XXXXXXX,
         LSFT(KC_SLASH), LSFT(KC_1), RSFT(KC_5), LSFT(KC_3), LSFT(KC_BACKSLASH),                      RALT(KC_E), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                 LSFT(KC_9), LSFT(KC_0),                                                        XXXXXXX, XXXXXXX
     ),

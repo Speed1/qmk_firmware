@@ -40,6 +40,7 @@ combos:
   - {p: [0, 1], k: "lock", l: ["DEF"]}
   - {p: [1, 3], k: "close app", l: ["DEF"], a: top, o: 0.6}
   - {p: [2, 3], k: BSpace, l: ["DEF"]}
+  - {p: [3, 4], k: "delete word", l: ["DEF"]}
   - {p: [12, 13], k: "Enter", l: ["DEF"]}
   - {p: [12, 13], k: "Enter", l: ["DEF"]}
   - {p: [21, 23], k: "Esc", l: ["DEF"], a: bottom, o: 0.1}
