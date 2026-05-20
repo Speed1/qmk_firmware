@@ -77,11 +77,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                 case SMTD_ACTION_TOUCH:
                     return SMTD_RESOLUTION_UNCERTAIN;
                 case SMTD_ACTION_TAP:
-                    if (is_caps_word_on()) {
-                        tap_code16(LSFT(KC_R)); // Capital R when caps word is on
-                    } else {
-                        tap_code(KC_R);      // Normal r otherwise
-                    }
+                    SMTD_TAP_16(true, KC_R);
                     return SMTD_RESOLUTION_DETERMINED;
                 case SMTD_ACTION_HOLD:
                     switch (tap_count) {
@@ -112,11 +108,7 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                 case SMTD_ACTION_TOUCH:
                     return SMTD_RESOLUTION_UNCERTAIN;
                 case SMTD_ACTION_TAP:
-                    if (is_caps_word_on()) {
-                        tap_code16(LSFT(KC_I)); // Capital I when caps word is on
-                    } else {
-                        tap_code(KC_I);      // Normal i otherwise
-                    }
+                    SMTD_TAP_16(true, KC_I);
                     return SMTD_RESOLUTION_DETERMINED;
                 case SMTD_ACTION_HOLD:
                     switch (tap_count) {
@@ -144,13 +136,13 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     return SMTD_RESOLUTION_UNCERTAIN;
                 case SMTD_ACTION_TAP:
                     if (tap_count == 0) {
-                        tap_code16(KC_DOT);
+                        SMTD_TAP_16(true, KC_DOT);
                     } else if (tap_count == 1) {
                         // Double-tap: ':'
-                        tap_code16(LSFT(KC_SCLN));
+                        SMTD_TAP_16(true, LSFT(KC_SCLN));
                     } else {
                         // triple-tap or more: '...'
-                        tap_code16(KC_DOT);
+                        SMTD_TAP_16(true, KC_DOT);
                         tap_code16(KC_DOT);
                         tap_code16(KC_DOT);
                     }
@@ -182,10 +174,10 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
                     return SMTD_RESOLUTION_UNCERTAIN;
                 case SMTD_ACTION_TAP:
                     if (tap_count == 0) {
-                        tap_code16(KC_COMMA);
+                        SMTD_TAP_16(true, KC_COMMA);
                     } else {
                         // Double-tap: ';'
-                        tap_code16(KC_SCLN);
+                        SMTD_TAP_16(true, KC_SCLN);
                     }
                     return SMTD_RESOLUTION_DETERMINED;
                 case SMTD_ACTION_HOLD:

@@ -1192,9 +1192,17 @@ bool smtd_feature_enabled_default(uint16_t keycode, smtd_feature feature) {
  * ************************************* */
 
 #ifdef CAPS_WORD_ENABLE
-#define SMTD_TAP_16(use_cl, key) tap_code16(use_cl && is_caps_word_on() ? LSFT(key) : key)
-#define SMTD_REGISTER_16(use_cl, key) register_code16(use_cl && is_caps_word_on() ? LSFT(key) : key)
-#define SMTD_UNREGISTER_16(use_cl, key) unregister_code16(use_cl && is_caps_word_on() ? LSFT(key) : key)
+static inline void smtd_process_caps_word(uint16_t keycode) {
+    if (is_caps_word_on()) {
+        keyevent_t event = MAKE_KEYEVENT(0, 0, true);
+        keyrecord_t record = {.event = event};
+        process_caps_word(keycode, &record);
+    }
+}
+
+#define SMTD_TAP_16(use_cl, key) do { if (use_cl) { smtd_process_caps_word(key); } tap_code16(key); } while (0)
+#define SMTD_REGISTER_16(use_cl, key) do { if (use_cl) { smtd_process_caps_word(key); } register_code16(key); } while (0)
+#define SMTD_UNREGISTER_16(use_cl, key) unregister_code16(key)
 #else
 #define SMTD_TAP_16(use_cl, key) tap_code16(key)
 #define SMTD_REGISTER_16(use_cl, key) register_code16(key)
