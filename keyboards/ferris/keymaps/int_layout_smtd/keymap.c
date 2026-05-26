@@ -270,8 +270,8 @@ const uint16_t PROGMEM combo_screenshot[]  = {KC_C, KC_D, COMBO_END};
 
 // Text editing combos
 const uint16_t PROGMEM combo_delete_word[] = {KC_P, KC_B, COMBO_END};
-const uint16_t PROGMEM combo_caps_lock[]   = {KC_T, KC_N, COMBO_END};
-const uint16_t PROGMEM combo_caps_word[]   = {KC_P, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_caps_lock[]   = {KC_P, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_caps_word[]   = {KC_T, KC_N, COMBO_END};
 const uint16_t PROGMEM combo_enter[]       = {KC_S, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_backspace[]   = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_esc[]      = {KC_X, KC_D, COMBO_END};
@@ -329,6 +329,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case COMBO_CAPS_WORD:
             if (pressed) {
                 caps_word_toggle();
+                // Update LED immediately when Caps Word state changes
+                bool caps_word_active = is_caps_word_on();
+                gpio_write_pin(LED_CAPS_LOCK_PIN, (LED_PIN_ON_STATE == 0) ? !caps_word_active : caps_word_active);
             }
             break;
         case COMBO_ENTER:
@@ -370,6 +373,26 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 }
 
 // end Combos
+
+// LED control for Caps Lock and Caps Word
+#ifdef LED_CAPS_LOCK_PIN
+bool led_update_user(led_t led_state) {
+    bool should_light = led_state.caps_lock || is_caps_word_on();
+    gpio_write_pin(LED_CAPS_LOCK_PIN, (LED_PIN_ON_STATE == 0) ? !should_light : should_light);
+    return false;
+}
+
+void housekeeping_task_user(void) {
+    // Continuously update LED based on Caps Lock and Caps Word state
+    static bool last_led_state = false;
+    bool current_led_state = is_caps_word_on();
+    
+    if (current_led_state != last_led_state) {
+        gpio_write_pin(LED_CAPS_LOCK_PIN, (LED_PIN_ON_STATE == 0) ? !current_led_state : current_led_state);
+        last_led_state = current_led_state;
+    }
+}
+#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format off

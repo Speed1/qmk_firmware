@@ -3,6 +3,9 @@
 #define MAX_DEFERRED_EXECUTORS 10 
 #define COMBO_COUNT COMBO_LENGTH 
 #define TAPPING_TERM 150
+#define LED_CAPS_LOCK_PIN 24  
+#define LED_PIN_ON_STATE 0
+
 
 /* Split Settings
 #define SPLIT_USB_DETECT
