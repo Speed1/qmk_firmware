@@ -225,6 +225,17 @@ uint32_t get_smtd_timeout(uint16_t keycode, smtd_timeout timeout) {
             if (timeout == SMTD_TIMEOUT_SEQUENCE) return 200; // longer double-tap window
     }
 
+#ifdef DYNAMIC_TAPPING_TERM_ENABLE
+    switch (timeout) {
+        case SMTD_TIMEOUT_TAP:
+            return g_tapping_term;
+        case SMTD_TIMEOUT_SEQUENCE:
+            return g_tapping_term / 2;
+        case SMTD_TIMEOUT_RELEASE:
+            return g_tapping_term / 4;
+    }
+#endif
+
     return get_smtd_timeout_default(timeout);
 }
 
@@ -416,9 +427,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LSFT(KC_9), LSFT(KC_0),                                                        XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_2(
-        KC_ESC,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 QK_BOOT, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_ESC,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 QK_BOOT, DT_DOWN,  DT_PRNT, DT_UP, XXXXXXX,
         LCTL_T(XXXXXXX), KC_F4,  KC_F5,  KC_F6,  KC_F11,                                                      KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
-        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                             XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
+        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                             XXXXXXX, RGUI(KC_LEFT), KC_PGDN, KC_PGUP, RGUI(KC_RGHT),
                    XXXXXXX, XXXXXXX,                                                                          KC_DEL, XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_2(
