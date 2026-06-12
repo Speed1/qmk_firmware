@@ -210,8 +210,8 @@ smtd_resolution on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap
         SMTD_MT(KC_F6, KC_LEFT_SHIFT)
         // Layer toggles
         //SMTD_LT(KC_ESC, _CFG)
-        SMTD_LT(KC_SPC, _NUM)
-        SMTD_LT(KC_TAB, _NAV)
+        SMTD_LT(KC_TAB, _NUM)
+        SMTD_LT(KC_SPC, _NAV)
         SMTD_LT(KC_ENT, _SYM)
     }
 
@@ -412,7 +412,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,     KC_W,    KC_F,    KC_P,    KC_B,                                                             KC_J,    KC_L,    KC_U,    KC_Y,    KC_MINS,
         KC_A, CKC_R, KC_S, KC_T, KC_G,                                                                         KC_M, KC_N, KC_E, CKC_I, KC_O,
         KC_Z, KC_X, KC_C, KC_D, KC_V,                                                                           KC_K,    KC_H,    KC_COMMA, KC_DOT,  KC_SLASH,
-                KC_SPC, KC_TAB,                                                                             KC_BSPC, KC_ENT
+                KC_TAB, KC_SPC,                                                                             KC_BSPC, KC_ENT
     ),
 /*    [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
         KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,                                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
@@ -427,15 +427,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LSFT(KC_9), LSFT(KC_0),                                                        XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_2(
-        KC_ESC,  KC_F7, KC_F8, KC_F9, KC_F10,                                                                 QK_BOOT, DT_DOWN,  DT_PRNT, DT_UP, XXXXXXX,
-        LCTL_T(XXXXXXX), KC_F4,  KC_F5,  KC_F6,  KC_F11,                                                      KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
-        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                             XXXXXXX, RGUI(KC_LEFT), KC_PGDN, KC_PGUP, RGUI(KC_RGHT),
+        KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, LGUI(KC_Y),                                                                 QK_BOOT, DT_DOWN,  DT_PRNT, DT_UP, XXXXXXX,
+        CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Z),                                                      KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
+        CKC_NZ, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                             XXXXXXX, RGUI(KC_LEFT), KC_PGDN, KC_PGUP, RGUI(KC_RGHT),
                    XXXXXXX, XXXXXXX,                                                                          KC_DEL, XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_2(
-        KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, LGUI(KC_Y),                                                     LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
-        CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Z),                                                               KC_EQUAL,  KC_4,  KC_5,  KC_6, KC_RBRC,
-        CKC_NZ, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                         KC_BACKSLASH,  KC_1,  KC_2,  KC_3, KC_DOT,
+        KC_ESC,  KC_F7, KC_F8, KC_F9, KC_F10,                                                    LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
+        LCTL_T(XXXXXXX), KC_F4,  KC_F5,  KC_F6,  KC_F11,                                                               KC_EQUAL,  KC_4,  KC_5,  KC_6, KC_RBRC,
+        XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                         KC_BACKSLASH,  KC_1,  KC_2,  KC_3, KC_DOT,
                   XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0
     ),
  /*       [_CFG] = LAYOUT_split_3x5_3(
