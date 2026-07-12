@@ -56,14 +56,14 @@ enum custom_keycodes {
 
 // Process tap dance records
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_smtd(keycode, record)) {
+        return false;
+    }
     static uint16_t smtd_last_pressed_keycode = KC_NO;
     if (record->event.pressed) {
         smtd_last_pressed_keycode = keycode;
     } else if (keycode == smtd_last_pressed_keycode) {
         smtd_last_pressed_keycode = KC_NO;
-    }
-    if (!process_smtd(keycode, record)) {
-        return false;
     }
     return true;
 }
@@ -427,13 +427,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LSFT(KC_9), LSFT(KC_0),                                                        XXXXXXX, XXXXXXX
     ),
     [_NAV] = LAYOUT_split_3x5_2(
-        KC_MUTE, KC_VOLD, LGUI(KC_F), KC_VOLU, LGUI(KC_Y),                                                                 QK_BOOT, DT_DOWN,  DT_PRNT, DT_UP, XXXXXXX,
+        KC_ESC, KC_VOLD, LGUI(KC_F), KC_VOLU, LGUI(KC_Y),                                                                 QK_BOOT, DT_DOWN,  DT_PRNT, DT_UP, XXXXXXX,
         CKC_NA, CKC_NR, CKC_NS, CKC_NT, RGUI(KC_Z),                                                      KC_HOME, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         CKC_NZ, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                                                             XXXXXXX, RGUI(KC_LEFT), KC_PGDN, KC_PGUP, RGUI(KC_RGHT),
                    XXXXXXX, XXXXXXX,                                                                          KC_DEL, XXXXXXX
     ),
      [_NUM] = LAYOUT_split_3x5_2(
-        KC_ESC,  KC_F7, KC_F8, KC_F9, KC_F10,                                                    LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
+        KC_MUTE,  KC_F7, KC_F8, KC_F9, KC_F10,                                                    LSFT(KC_EQUAL),  KC_7,  KC_8,  KC_9,  LSFT(KC_RBRC),
         LCTL_T(XXXXXXX), KC_F4,  KC_F5,  KC_F6,  KC_F11,                                                               KC_EQUAL,  KC_4,  KC_5,  KC_6, KC_RBRC,
         XXXXXXX,  KC_F1,  KC_F2,  KC_F3,  KC_F12,                                                         KC_BACKSLASH,  KC_1,  KC_2,  KC_3, KC_DOT,
                   XXXXXXX, XXXXXXX,                                                                           KC_BSPC, KC_0
