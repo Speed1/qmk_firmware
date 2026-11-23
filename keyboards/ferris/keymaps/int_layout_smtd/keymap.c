@@ -54,6 +54,14 @@ enum custom_keycodes {
 
 #include "sm_td.h"
 
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+    LAYOUT_split_3x5_2(
+        'L', 'L', 'L', 'L', 'L',    'R', 'R', 'R', 'R', 'R',
+        'L', '*', '*', 'L', 'L',    'R', 'R', 'R', 'R', 'R',
+        'L', 'L', 'L', 'L', 'L',    'R', 'R', 'R', 'R', 'R',
+                  '*', '*',                    '*', '*'
+    );
+
 // Process tap dance records
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_smtd(keycode, record)) {

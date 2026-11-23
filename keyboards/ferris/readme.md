@@ -26,5 +26,8 @@ build and flash firmware on both controllers
 
     ```bash
     make CONVERT_TO=rp2040_ce ferris/sweep:int_layout
+    #Liatris
     sleep 3 && cp ferris_sweep_int_layout_rp2040_ce.uf2 /Volumes/RPI-RP2
+    #Sea Picro
+    cp ferris_sweep_int_layout_smtd_rp2040_ce.uf2 /Volumes/RPI-RP2
     ```
